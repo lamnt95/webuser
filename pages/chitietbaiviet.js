@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import HomeScreen from "../screens/HomeScreen"
+import PostDetailScreen from "../screens/PostDetailScreen"
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomeScreen />
+      <PostDetailScreen />
     </div>
   )
 }

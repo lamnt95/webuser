@@ -1,14 +1,14 @@
 import Head from 'next/head'
-import HomeScreen from "../screens/HomeScreen"
+import CartScreen from "../screens/CartScreen"
 
-export default function Home() {
+export default function Cart() {
   return (
     <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomeScreen />
+      <CartScreen />
     </div>
   )
 }
