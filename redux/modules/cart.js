@@ -49,10 +49,12 @@ export const actions = {
 };
 
 const getProducts = (state) => _.get(state, "cart.productDetails");
+const getCart = (state) => _.get(state, "cart");
 const getCountProduct = (state) => _.size(getProducts(state));
 
 export const selectors = {
   getProducts,
+  getCart,
   getCountProduct
 };
 
@@ -76,11 +78,13 @@ function* orderSaga() {
     try {
       const state = yield select();
       const { cart } = state || {}
-      // const response = yield api.validateOrder(cart);
-      // console.log("validateOrder", response)
-      const response = yield api.createOrder(cart);
-      yield put(actions.orderSuccess({ cart }));
-      onSuccess()
+      const { productDetails, receivedDate, userInfoOrder } = cart || {}
+      const cartBody = { productDetails, receivedDate, userInfoOrder }
+      const response = yield api.validateOrder(cartBody);
+      console.log("validateOrder", response, cartBody)
+      // const response = yield api.createOrder(cart);
+      // yield put(actions.orderSuccess({ cart }));
+      // onSuccess()
     } catch (error) {
       yield put(actions.orderFail(error));
     }

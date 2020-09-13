@@ -12,21 +12,14 @@ function getQuantity(productsKeyBy, id) {
   return _.get(productsKeyBy, `${id}.productQuantity`)
 }
 
-function getRealPrice(item) {
-  return item.priceAfterPromotion ? item.priceAfterPromotion : item.price
-}
-
 function mapPriceProduct(products, productsWithQuantity) {
   const productsKeyBy = _.keyBy(productsWithQuantity, "productId")
   return _.map(products, i => ({
-    id: i.id,
+    productId: i.id,
     name: i.name,
     code: i.code,
-    realPrice: getRealPrice(i),
-    priceAfterPromotion: i.priceAfterPromotion,
     price: i.price,
     quantity: getQuantity(productsKeyBy, i.id),
-    totalPrice: getQuantity(productsKeyBy, i.id) * getRealPrice(i)
   }))
 }
 

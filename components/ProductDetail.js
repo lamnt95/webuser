@@ -1,9 +1,6 @@
 import _ from 'lodash'
 import React, { useEffect, useState } from "react"
 import ProductSlide from "./ProductSlide"
-import api from "../api"
-import { useRouter } from "next/router"
-import utils from "../utils"
 import { useDispatch } from "react-redux"
 import store from "../redux"
 import { toast } from 'react-toastify';
@@ -13,16 +10,14 @@ const addProductSuccess = () => {
 }
 
 export default function ProductDetail(props) {
-  const { onPress } = props;
+  const { onPress, data } = props;
   const [product, setProduct] = useState();
-  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages } = product || {}
-  const router = useRouter() || {}
+  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id } = product || {}
   const dispatch = useDispatch();
-  const id = utils.getProductId(_.get(router, "query.id"))
 
   useEffect(() => {
-    api.getProductById(id).then(res => setProduct({ ...res, productQuantity: 0 }))
-  }, [id])
+    setProduct(data)
+  }, [data])
 
   const onDescreare = () => {
     const newProductQuantity = productQuantity - 1 < 0 ? 0 : productQuantity - 1

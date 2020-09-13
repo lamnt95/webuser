@@ -29,7 +29,6 @@ export default function ShoppingCart(props) {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  console.log("cart", cart)
 
   const onChangeFormInfo = (formData) => {
     const { receivedDate, addressDetail, addressType, email, fullName, phone, sex, provinceCode, districCode } = formData || {};

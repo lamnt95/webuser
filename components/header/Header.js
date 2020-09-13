@@ -146,7 +146,7 @@ const PhoneNumber = styled.div`
   font-size:14px;
 `;
 
-export default function Header() {
+export default function Header({ onChange = () => { }, onSubmit = () => { } }) {
   const count = useSelector(store.selectors.cart.getCountProduct);
 
   const router = useRouter()
@@ -159,8 +159,8 @@ export default function Header() {
     </Left>
     <Center>
       <InputWrapper>
-        <Input placeholder="Tìm kiếm sản phẩm" />
-        <BtnSearch>
+        <Input placeholder="Tìm kiếm sản phẩm" onChange={(e) => onChange(_.get(e, "target.value"))} />
+        <BtnSearch onClick={onSubmit}>
           <IconSearch className="fas fa-search" />
         </BtnSearch>
       </InputWrapper>

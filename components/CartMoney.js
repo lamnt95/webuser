@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useState, useMemo } from "react"
-import { Input, Dropdown } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 import store from "../redux"
 import { useSelector } from "react-redux"
 import api from "../api"
@@ -15,43 +15,50 @@ function ProductRow({ item, index }) {
     <td>{item.quantity}</td>
     <td>{item.price}</td>
     <td>{item.priceAfterPromotion}</td>
-    <td>{item.totalPrice}</td>
+    <td>{item.totalCost}</td>
+    <td>{item.totalRatePromotion}</td>
+    <td>{item.totalCostAfterPromotion}</td>
   </tr>
 }
 
-const couponPolicy = [{ id: "ratePromotionCoupon", type: "rate" }, { id: "volumeFeeShipPromotionCoupon", type: "volume" }, { id: "volumePromotionCoupon", type: "volume" }]
-
-function getCouponPolicyActive(promotion = {}) {
-  for (let i = 0; i < couponPolicy.length; i += 1) {
-    if (_.isNumber(promotion[couponPolicy[i].id])) return {
-      id: couponPolicy[i].id,
-      type: couponPolicy[i].type,
-      data: promotion[couponPolicy[i].id]
-    };
-  }
-}
-
-export default function CartMoney({ onChange, onSubmit }) {
+export default function promotionCoupon({ onChange, onSubmit }) {
 
   const products = useSelector(store.selectors.cart.getProducts);
+  const cartInfo = useSelector(store.selectors.cart.getCart);
+
+  const [isChecked, setIsChecked] = useState(false);
   const [productDetail, setProductDetail] = useState();
+  const [costDetail, setCostDetail] = useState();
+  const { totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment } = costDetail || {}
+
   const [promotionCoupon, setPromotionCoupon] = useState();
   const [coupon, setCoupon] = useState(0);
+
   const promotionCouponDropdown = _.map(promotionCoupon, i => ({
-    key: i.codeCoupon,
-    text: i.codeCoupon,
-    value: i.codeCoupon
+    key: i,
+    text: i,
+    value: i
   }))
-  const promotionCouponKeyBy = _.keyBy(promotionCoupon, "codeCoupon");
-  const discount = getCouponPolicyActive(promotionCouponKeyBy[coupon]) || {};
-  const discountPrice = discount.data || 0
-  const totalPrice = useMemo(() => _.sum(_.map(productDetail, "totalPrice")), productDetail) || 0
-  const finalPrice = discount.type === "rate" ? totalPrice * (1 - discountPrice / 100) : (totalPrice - discountPrice)
+
   useEffect(() => {
     const productIdList = _.map(products, i => i.productId)
     api.getProductsByMultiId(productIdList).then(res => utils.mapPriceProduct(res, products)).then(setProductDetail)
     api.getPromotionCoupon().then(setPromotionCoupon);
   }, [products])
+
+  const onCheck = () => {
+    const { productDetails, receivedDate, userInfoOrder, coupon } = cartInfo || {}
+    const cartBody = { productDetails, receivedDate, userInfoOrder, coupon }
+    api.validateOrder(cartBody).then(res => {
+      const { productDetails, totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment } = res || {}
+      const productDetailKeyBy = _.keyBy(productDetail, "productId") || {}
+      const productDetailsNew = _.map(productDetails, i => ({ ...i, ...(productDetailKeyBy[i.productId] || {}) }))
+      setProductDetail(productDetailsNew)
+      const costDetailNew = { totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment }
+      setCostDetail(costDetailNew)
+      setIsChecked(true)
+    })
+  }
 
   const onChangeCoupon = (e, data) => {
     const { value } = data || {}
@@ -71,7 +78,9 @@ export default function CartMoney({ onChange, onSubmit }) {
             <th scope="col">Số lượng</th>
             <th scope="col">Đơn giá trước khuyến mại</th>
             <th scope="col">Đơn giá sau khuyến mại</th>
-            <th scope="col">Thành tiền</th>
+            <th scope="col">Thành tiền trước khuyến mại</th>
+            <th scope="col">Thành tiền được khuyến mại</th>
+            <th scope="col">Thành tiền sau khuyến mại</th>
           </tr>
         </thead>
         <tbody>
@@ -81,35 +90,51 @@ export default function CartMoney({ onChange, onSubmit }) {
           />)}
           <tr>
             <th colSpan={5}>Tổng tiền</th>
-            <td className="cart_container_originprice">{totalPrice}</td>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalCost}</td>
+          </tr>
+          <tr>
+            <th colSpan={5}>Tổng tiền được khuyến mại</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalRatePromotion}</td>
+          </tr>
+          <tr>
+            <th colSpan={5}>Tổng tiền sau khuyến mại</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalCostAfterPromotion}</td>
           </tr>
           <tr>
             <th colSpan={5} style={{ verticalAlign: "middle" }}>Mã khuyến mại</th>
-            <td>
-              <Dropdown
-                style={{ width: 200 }}
-                placeholder='Chọn mã khuyến mại'
-                fluid
-                selection
-                value={coupon}
-                options={promotionCouponDropdown}
-                onChange={onChangeCoupon}
-              />
+            <td colSpan={5} >
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Dropdown
+                  style={{ width: 200 }}
+                  placeholder='Chọn mã khuyến mại'
+                  fluid
+                  selection
+                  value={coupon}
+                  options={promotionCouponDropdown}
+                  onChange={onChangeCoupon}
+                />
+              </div>
             </td>
           </tr>
           <tr>
-            <th colSpan={5}>Tiền khuyến mại</th>
-            <td className="cart_container_saleprice">{discountPrice}{discount.type === "rate" && "%"}</td>
+            <th colSpan={5}>Giá trị coupon</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{valueCoupon || 0}</td>
           </tr>
           <tr>
-            <th colSpan={5}>Số tiền thanh toán thực tế</th>
-            <td className="cart_container_realprice">{finalPrice < 0 ? 0 : finalPrice || 0}</td>
+            <th colSpan={5}>Tổng tiền thanh toán thực tế</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{valuePayment}</td>
           </tr>
         </tbody>
       </table>
-      <div className="cart_container_submit" style={{ height: '50px' }}>
-        <div className="cart_container_submit_text" onClick={onSubmit}>Đặt hàng</div>
+      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+        <div className="cart_container_submit" style={{ height: '50px' }}>
+          <div className="cart_container_submit_text" onClick={onCheck}>Kiểm tra đơn hàng</div>
+        </div>
+        {isChecked && <div className="cart_container_submit" style={{ height: '50px' }}>
+          <div className="cart_container_submit_text" onClick={onSubmit}>Đặt hàng</div>
+        </div>}
       </div>
+
     </div>
   </div>
 }

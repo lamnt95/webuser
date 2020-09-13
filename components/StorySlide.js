@@ -1,3 +1,4 @@
+import _ from "lodash"
 import styled from "styled-components"
 import React, { useState } from 'react';
 import {
@@ -12,34 +13,20 @@ const Img = styled.img`
   height:360px;
 `;
 
-const items = [
-  {
-    id: 1,
-    src: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftoplist.vn%2Fimages%2F800px%2Fbanh-com-bao-minh-441369.jpg&f=1&nofb=1",
-  },
-  {
-    id: 2,
-    src: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftoplist.vn%2Fimages%2F800px%2Fbanh-com-bao-minh-441369.jpg&f=1&nofb=1",
-  },
-  {
-    id: 3,
-    src: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftoplist.vn%2Fimages%2F800px%2Fbanh-com-bao-minh-441369.jpg&f=1&nofb=1",
-  },
-];
-
-const Slide = () => {
+const Slide = ({ storyMedias = [] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+  const slideData = storyMedias || [];
 
   const next = () => {
     if (animating) return;
-    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+    const nextIndex = activeIndex === _.size(slideData) - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   }
 
   const previous = () => {
     if (animating) return;
-    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    const nextIndex = activeIndex === 0 ? _.size(slideData) - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   }
 
@@ -48,16 +35,15 @@ const Slide = () => {
     setActiveIndex(newIndex);
   }
 
-  const slides = items.map((item) => {
+  const slides = _.map(slideData, (item) => {
     return (
       <CarouselItem key={item.id}
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.src}
       >
-        {item.video ?
-          <iframe className="carousel_video" src="https://www.youtube.com/embed/CWSpNKjNO54" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          : <Img src={item.src} />}
+        {item.videoSrc ?
+          <iframe className="carousel_video" src={item.videoSrc} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          : <Img src={item.imageSrc} />}
       </CarouselItem>
     );
   });
@@ -69,7 +55,7 @@ const Slide = () => {
         next={next}
         previous={previous}
       >
-        <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+        <CarouselIndicators items={slideData} activeIndex={activeIndex} onClickHandler={goToIndex} />
         {slides}
         <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
         <CarouselControl direction="next" directionText="Next" onClickHandler={next} />

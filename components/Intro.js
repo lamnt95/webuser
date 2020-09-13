@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React from "react"
 import styled from "styled-components"
 
@@ -27,13 +28,12 @@ const Text = styled.div`
   color: #7E2024;
 `
 
-export default function Intro() {
+export default function Intro({intro=""}) {
+  if(_.isEmpty(intro)) return null;
   return <Container id="intro">
     <TextWrapper>
       <Text>
-        Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu) Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu) Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu)
-        Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu) Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu) Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu)
-        Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu) Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu) Giới thiệu sơ lược về cửa hàng bánh cốm Nguyên Hương (2-3 câu)
+        {intro}
     </Text>
     </TextWrapper>
   </Container>
