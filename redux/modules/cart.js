@@ -80,11 +80,10 @@ function* orderSaga() {
       const { cart } = state || {}
       const { productDetails, receivedDate, userInfoOrder } = cart || {}
       const cartBody = { productDetails, receivedDate, userInfoOrder }
-      const response = yield api.validateOrder(cartBody);
-      console.log("validateOrder", response, cartBody)
-      // const response = yield api.createOrder(cart);
-      // yield put(actions.orderSuccess({ cart }));
-      // onSuccess()
+      // const response = yield api.validateOrder(cartBody);
+      const response = yield api.createOrder(cart);
+      yield put(actions.orderSuccess({ cart }));
+      onSuccess()
     } catch (error) {
       yield put(actions.orderFail(error));
     }

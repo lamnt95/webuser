@@ -8,7 +8,7 @@ const addProductSuccess = () => {
 }
 
 export default function Product(props) {
-  const { onPress, name, price, id, image } = props;
+  const { onPress, name, price, id, image, unit } = props;
   const dispatch = useDispatch();
   const [product, setProduct] = useState({
     productId: id,
@@ -39,7 +39,7 @@ export default function Product(props) {
     </div>
     <div className="product_buyWrapper">
       <div className="product_price_text">Gía bán: </div>
-      <div className="product_price">{price}/cái</div>
+      <div className="product_price">{price}/{unit}</div>
     </div>
     <div className="product_book">
       <div className="left">

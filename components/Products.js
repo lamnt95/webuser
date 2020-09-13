@@ -13,6 +13,6 @@ export default function Products({ data = [] }) {
   }
 
   return <div className="products" id="products">
-    {_.map(data, i => <Product onPress={onClick} price={i.price} name={i.name} id={i.id} key={i.id} image={i.image} />)}
+    {_.map(data, i => <Product onPress={onClick} price={i.price} name={i.name} id={i.id} key={i.id} image={i.image} unit={i.unit} />)}
   </div>
 }

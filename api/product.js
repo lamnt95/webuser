@@ -1,13 +1,10 @@
 import _ from "lodash"
 import api from "./api"
 
-function queryProductByCategoryId(categoryId) {
-  const url = "/restaurant-cake-api/v1/user/products?page=0&size=1000"
-  return api.get(url).then(({ data }) => data.content).then(res => categoryId ? _.filter(res, i => i.categoryId == categoryId) : res)
-}
-
-function searchProduct(keyword, categoryId) {
-  return queryProductByCategoryId(categoryId).then(res => _.filter(res, i => _.includes(i.name, keyword)))
+function queryProduct(params = {}) {
+  const { categoryId, page = 0, productCode, productId, productName, size = 20 } = params || {}
+  const url = "/restaurant-cake-api/v1/user/products"
+  return api.get(url, { categoryId, page, productCode, productId, productName, size })
 }
 
 function getProductById(productId) {
@@ -20,9 +17,8 @@ function getProductsByMultiId(productIdList) {
 }
 
 export default {
-  queryProductByCategoryId,
+  queryProduct,
   getProductById,
   getProductsByMultiId,
-  searchProduct
 }
 

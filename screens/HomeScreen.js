@@ -31,17 +31,15 @@ export default function HomeScreen() {
 
   const { intro, story, userManual, policy, videoIntro } = data || {};
 
+  const images = _.get(data, "images") || [];
+  const storyMedias = _.get(data, "storyMedias") || [];
 
-
-  const images = _.get(category, "images") || [];
-  const storyMedias = _.get(category, "storyMedias") || [];
-
-
+  console.log("data", data)
 
   useEffect(() => {
-    api.getCategory(categoryId).then(setCategory);
+    api.getCategory(categoryId).then(res => res.data).then(setCategory);
     api.getPostIntroDetail().then(setPostIntro);
-    api.queryProductByCategoryId(categoryId).then(setProducts);
+    api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(setProducts);
   }, [categoryId])
 
   const onChangeSearch = (keyword) => {
@@ -49,8 +47,9 @@ export default function HomeScreen() {
   }
 
   const onSubmitSearch = () => {
-    api.searchProduct(keywordSearch, categoryId).then(setProducts)
+    api.queryProduct({ productName: keywordSearch, categoryId }).then(res => _.get(res, "data.content")).then(setProducts)
   }
+
 
   return <div>
     <Header onChange={onChangeSearch} onSubmit={onSubmitSearch} />

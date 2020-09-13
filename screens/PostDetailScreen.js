@@ -1,12 +1,23 @@
 import _ from "lodash";
-import React from "react"
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
 import Header from "../components/header/Header"
 import Menu from "../components/header/Menu"
 import VideoIntro from "../components/VideoIntro"
 import Footer from "../components/Footer"
 import Map from "../components/Map"
+import api from "../api"
+import utils from "../utils"
+import { useRouter } from "next/router"
 
 const products = new Array(10).fill(0)
+
+export const ContentWrapper = styled.div`
+  margin-top: 35px;
+  img {
+    width: 100%;
+  }
+`;
 
 function TopProductItem() {
   return <div className="post-product-topContent-product">
@@ -27,83 +38,42 @@ function TopPostItem() {
   </div>
 }
 
-function PostItem() {
+function PostItem({ data = {} }) {
+  const { id, title, viewQuantity, updatedDate, content } = data || {}
+
   return <div className="post-preview-item">
     <div className="header">
       <div className="title">
-        Tin tức hữu ích
-    </div>
+        {title}
+      </div>
       <div className="info">
         <i className="fas fa-clock icon-clock" />
-        <div className="date">dd/mm/yyyy</div>
+        <div className="date">{utils.formatDate(updatedDate)}</div>
         <div className="seperate">-</div>
         <i className="fas fa-eye icon-eye" />
-        <div className="view">Lượt xem</div>
+        <div className="view">Lượt xem {viewQuantity}</div>
       </div>
     </div>
     <div className="detail">
       <div className="text">
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-        Nội dung hiển thị tại bản tin (có chỗ khai báo riêng, không phải lấy từ câu đầu tiên của nội dung bài viết)
-    </div>
+        <ContentWrapper dangerouslySetInnerHTML={{ __html: content }} />
+      </div>
     </div>
   </div>
 }
 
 export default function PostScreen() {
+  const [postDetail, setPostDetail] = useState({});
+
+  const router = useRouter()
+  const postId = _.get(router, "query.id")
+  useEffect(() => {
+    if (_.isUndefined(postId)) return;
+    api.getPostDetail(postId).then(setPostDetail)
+    api.increasePostView(postId)
+  }, [postId])
+
+
   return <div>
     <Header />
     <Menu />
@@ -134,7 +104,7 @@ export default function PostScreen() {
       </div>
       <div className="post-right">
         <div className="post-preview-item-wrapper">
-          <PostItem />
+          <PostItem data={postDetail} />
         </div>
       </div>
     </div>

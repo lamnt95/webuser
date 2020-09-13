@@ -12,7 +12,7 @@ const addProductSuccess = () => {
 export default function ProductDetail(props) {
   const { onPress, data } = props;
   const [product, setProduct] = useState();
-  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id } = product || {}
+  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id, unit } = product || {}
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,10 +50,10 @@ export default function ProductDetail(props) {
         <div className="product_code">
           Mã sản phẩm: {code}
         </div>
-        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>Giá gốc: {price}/cái</div>
+        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>Giá gốc: {price}/{unit}</div>
         {priceAfterPromotion && <div className="price_sale">Giá khuyến mại:
           <span className="price_sale_number">
-            {priceAfterPromotion}/cái
+            {priceAfterPromotion}/{unit}
           </span>
         </div>}
         <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 20 }}>

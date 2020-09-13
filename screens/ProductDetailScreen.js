@@ -21,8 +21,10 @@ export default function ProductDetailScreen() {
   useEffect(() => {
     api.getProductById(productId).then(res => {
       const { categoryId } = res || {}
-      api.getCategory(categoryId).then(setCategory)
       setProduct({ ...res, productQuantity: 0 })
+      if (!_.isEmpty(categoryId)) {
+        api.getCategory(categoryId).then(setCategory)
+      }
     })
 
   }, [productId])

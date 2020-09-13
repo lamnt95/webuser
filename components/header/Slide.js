@@ -49,6 +49,8 @@ const Slide = ({ slideData = [] }) => {
     );
   });
 
+  console.log("slideData", slideData)
+
   if (_.isEmpty(slideData)) return null;
 
   return (

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import PostDetailScreen from "../screens/PostDetailScreen"
+import PostDetailScreen from "../../screens/PostDetailScreen"
 
 export default function Home() {
   return (

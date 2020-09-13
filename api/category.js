@@ -8,7 +8,8 @@ function queryCategory() {
 
 
 function getCategory(id) {
-  return queryCategory().then(res => _.head(_.filter(res, i => i.id == id))).catch(e => e)
+  const url = `/restaurant-cake-api/v1/user/categories/${id}`
+  return api.get(url)
 }
 
 export default {
