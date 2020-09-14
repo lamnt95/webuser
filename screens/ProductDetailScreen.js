@@ -22,7 +22,7 @@ export default function ProductDetailScreen() {
     api.getProductById(productId).then(res => {
       const { categoryId } = res || {}
       setProduct({ ...res, productQuantity: 0 })
-      if (!_.isEmpty(categoryId)) {
+      if (!_.isUndefined(categoryId)) {
         api.getCategory(categoryId).then(setCategory)
       }
     })
