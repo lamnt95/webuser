@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "qa": "npm i && npm run build && npm run start"
+    "dev": "node server",
+    "build": "cross-env NODE_ENV=production next build",
+    "start": "cross-env NODE_ENV=production node server",
+    "start-prod": "npm run build && npm run start",
+    "qa": "npm i && npm run start-prod"
   },
   "dependencies": {
     "axios": "0.19.2",
     "bootstrap": "^4.5.2",
+    "express": "^4.17.1",
     "google-map-react": "^2.0.8",
+    "http-proxy-middleware": "^1.0.5",
     "jquery": "^3.5.1",
     "lodash": "4.17.15",
     "moment": "2.27.0",
