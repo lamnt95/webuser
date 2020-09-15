@@ -9,7 +9,8 @@ import {
 } from 'reactstrap';
 
 const Img = styled.img`
-  width:480px;
+  width:100%;
+  /* max-width:480px; */
   height:360px;
 `;
 

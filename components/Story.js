@@ -12,8 +12,7 @@ export default function Story({ story = "", storyMedias = [] }) {
         {/* <div className="story_text_title">
         Câu chuyện ra đời
       </div> */}
-        <div className="story_text">
-          {story}
+        <div className="story_text" dangerouslySetInnerHTML={{ __html: story }}>
         </div>
       </div>}
     </div>

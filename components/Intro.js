@@ -12,6 +12,7 @@ const Container = styled.div`
   padding-right:80px;
   padding-top:50px;
   padding-bottom:50px;
+  justify-content: center;
 `;
 
 const TextWrapper = styled.div`
@@ -26,15 +27,16 @@ const Text = styled.div`
   line-height: 1.33;
   text-align: center;
   color: #7E2024;
+  width: 500px;
+  text-align: justify;
 `
 
-export default function Intro({intro=""}) {
-  if(_.isEmpty(intro)) return null;
+export default function Intro({ intro = "" }) {
+  if (_.isEmpty(intro)) return null;
   return <Container id="intro">
     <TextWrapper>
-      <Text>
-        {intro}
-    </Text>
+      <Text dangerouslySetInnerHTML={{ __html: intro }}>
+      </Text>
     </TextWrapper>
   </Container>
 }
