@@ -3,7 +3,11 @@ import _ from "lodash";
 import { toast } from 'react-toastify';
 
 const requestCache = {};
-export const domain = "http://34.66.141.204:8080";
+
+// uat
+// export const domain = "http://34.66.141.204:8080";
+
+export const domain = "http://202.92.6.130:8080";
 
 
 function getOptionsRequest(headers) {
