@@ -46,8 +46,8 @@ function MyApp({ Component, pageProps }) {
     <div class="fb-customerchat"
       attribution="setup_tool"
       page_id="103045498205814"
-      logged_in_greeting="Bánh cốm Nguyên Hương chào mừng quáy khách"
-      logged_out_greeting="Bánh cốm Nguyên Hương chào mừng quáy khách">
+      logged_in_greeting="Bánh cốm Nguyên Hương chào mừng qúy khách"
+      logged_out_greeting="Bánh cốm Nguyên Hương chào mừng qúy khách">
     </div>
   </Container>
 }

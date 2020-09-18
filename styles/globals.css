@@ -220,6 +220,7 @@ a {
 
 .story_slide {
   width: 50%;
+  padding-top: 30px;
 }
 
 .story_content {
@@ -228,6 +229,7 @@ a {
   margin-left: 40px;
   flex-direction: column;
   padding: 10px;
+  /* padding-top: 0px; */
 }
 
 .story_text_title {
@@ -284,7 +286,7 @@ a {
 .video_intro {
   display: flex;
   background-color: #ece9c4;
-  padding-top: 10px;
+  padding-top: 40px;
   padding-left: 40px;
   padding-right: 40px;
   flex-direction: column;
@@ -296,13 +298,13 @@ a {
 }
 
 .video_link_text {
-  margin-top: 20px;
+  margin-top: 40px;
   text-align: center;
   color: #7e2024;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-family: 'Taviraj', serif;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.33;
 }
 
