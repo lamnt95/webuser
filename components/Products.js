@@ -11,8 +11,8 @@ export default function Products({ data = [] }) {
     const route = `/chi-tiet-san-pham/${utils.toSlug(name)}-${id}`
     router.push(route)
   }
-
-  return <div className="products" id="products">
+  const length = _.size(data)
+  return <div className={`products ${length == 1 ? "products-one-item" : ""}`} id="products">
     {_.map(data, i => <Product onPress={onClick} price={i.price} name={i.name} id={i.id} key={i.id} image={i.image} unit={i.unit} />)}
   </div>
 }

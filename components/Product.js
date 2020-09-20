@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import store from "../redux"
 import { toast } from 'react-toastify';
+import utils from "../utils"
 
 const addProductSuccess = () => {
   toast.success("Thêm vào giỏ hàng thành công")
@@ -38,12 +39,12 @@ export default function Product(props) {
       {name}
     </div>
     <div className="product_buyWrapper">
-      <div className="product_price_text">Gía bán: </div>
-      <div className="product_price">{price}/{unit}</div>
+      <div className="product_price_text">Giá bán: </div>
+      <div className="product_price">{utils.formatMoney(price)}/{unit}</div>
     </div>
     <div className="product_book">
       <div className="left">
-        <div className="minus" onClick={onDescreare}>-</div>
+        <div className={`minus ${productQuantity == 0 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>
         <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" />
         <div className="plus" onClick={onIncreare}>+</div>
       </div>

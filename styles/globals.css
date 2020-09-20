@@ -71,21 +71,33 @@ a {
   justify-content: space-around;
 }
 
+.products-one-item {
+  justify-content: flex-start;
+}
+
 .product_container {
-  margin: 10px;
+  margin: 8px;
+  border: 1px solid transparent;
+}
+
+.product_container:hover {
+  border: 1px solid #86bc42;
 }
 
 .product_name {
   font-size: 16px;
+  font-family: "Taviraj", serif;
   font-weight: 600;
   color: rgb(71, 0, 0);
-  margin-top: 5px;
+  margin-top: 25px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
 .product_img {
   width: 256px;
   height: 256px;
+  cursor: pointer;
 }
 
 .product_buyWrapper {
@@ -93,18 +105,19 @@ a {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .product_price_text {
-  font-family: Roboto;
+  font-family: "Taviraj", serif;
   font-weight: normal;
   font-size: 14px;
   margin-right: 5px;
 }
 
 .product_price {
-  font-family: Roboto;
+  font-family: "Taviraj", serif;
   font-weight: 600;
   font-size: 20px;
   color: #248619;
@@ -154,6 +167,14 @@ a {
   user-select: none;
 }
 
+.product_book .minus:hover {
+  border-color: #7b6b6b;
+}
+
+.product_book .minus-zero:hover {
+  border-color: #ddd;
+}
+
 .product_book .plus {
   width: 38px;
   height: 38px;
@@ -171,8 +192,13 @@ a {
   user-select: none;
 }
 
+.product_book .plus:hover {
+  border-color: #7b6b6b;
+}
+
 .product_book .order {
   height: 38px;
+  font-family: "Taviraj", serif;
   line-height: 38px;
   margin-left: 10px;
   padding: 0 5px;
@@ -186,6 +212,13 @@ a {
   vertical-align: top;
   cursor: pointer;
   transition: all 0.3s linear;
+}
+
+.product_book .order:hover {
+  background-color: #7d0202;
+  text-decoration-color: #fff;
+  text-decoration: solid;
+  text-decoration-line: underline;
 }
 
 .product_book .incart {
@@ -250,8 +283,37 @@ a {
 }
 
 .story_slide_container .carousel-indicators li {
-  height: 30px;
+  height: 20px;
+  width: 20px;
   border-radius: 100%;
+  opacity: 0.2;
+}
+.story_slide_container .carousel-indicators li.active {
+  opacity: 0.5;
+}
+
+.story_slide_container .carousel-control-prev-icon {
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  border: 0;
+  outline: none;
+  opacity: 0.4 !important;
+  border-radius: 100%;
+  background-image: url("https://image.flaticon.com/icons/svg/25/25664.svg") !important;
+  transform: rotate(90deg);
+}
+
+.story_slide_container .carousel-control-next-icon {
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  border: 0;
+  outline: none;
+  opacity: 0.4 !important;
+  border-radius: 100%;
+  background-image: url("https://image.flaticon.com/icons/svg/25/25664.svg") !important;
+  transform: rotate(-90deg);
 }
 
 .story_slide_container .carousel_video {
@@ -277,7 +339,7 @@ a {
   color: #7e2024;
   padding-left: 40px;
   padding-right: 40px;
-  font-family: 'Taviraj', serif;
+  font-family: "Taviraj", serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.33;
@@ -302,7 +364,7 @@ a {
   text-align: center;
   color: #7e2024;
   margin-bottom: 40px;
-  font-family: 'Taviraj', serif;
+  font-family: "Taviraj", serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 1.33;
@@ -346,7 +408,7 @@ a {
 }
 
 .footer_block_title {
-  font-family: 'Taviraj', serif;
+  font-family: "Taviraj", serif;
   font-weight: 600;
   font-size: 20px;
   color: #7e2024;
@@ -354,14 +416,14 @@ a {
 }
 
 .footer_block_date {
-  font-family: 'Taviraj', serif;
+  font-family: "Taviraj", serif;
   font-weight: 400;
   font-size: 16px;
   color: #7e2024;
 }
 
 .footer_block_time {
-  font-family: 'Taviraj', serif;
+  font-family: "Taviraj", serif;
   font-weight: 400;
   font-size: 16px;
   color: #7e2024;
@@ -382,7 +444,7 @@ a {
 }
 
 .footer_block_contact_text {
-  font-family: 'Taviraj', serif;
+  font-family: "Taviraj", serif;
   font-weight: 600;
   font-size: 16px;
   color: #7e2024;
@@ -724,7 +786,7 @@ a {
 }
 
 .product_detail .buy {
-  margin-left: 50px;
+  margin-left: 30px;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -781,9 +843,39 @@ a {
   color: #7e2024;
 }
 
+
 .product_slide .carousel-indicators li {
-  height: 30px;
+  height: 20px;
+  width: 20px;
   border-radius: 100%;
+  opacity: 0.2;
+}
+.product_slide .carousel-indicators li.active {
+  opacity: 0.5;
+}
+
+.product_slide .carousel-control-prev-icon {
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  border: 0;
+  outline: none;
+  opacity: 0.4 !important;
+  border-radius: 100%;
+  background-image: url("https://image.flaticon.com/icons/svg/25/25664.svg") !important;
+  transform: rotate(90deg);
+}
+
+.product_slide .carousel-control-next-icon {
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  border: 0;
+  outline: none;
+  opacity: 0.4 !important;
+  border-radius: 100%;
+  background-image: url("https://image.flaticon.com/icons/svg/25/25664.svg") !important;
+  transform: rotate(-90deg);
 }
 
 .product_slide .video {
@@ -941,13 +1033,13 @@ textarea {
 /*  tai khoan */
 .paid-container .paid_title {
   font-weight: 700;
-  margin-top: 20px
+  margin-top: 20px;
 }
 
 .paid-container .paid_info {
   display: flex;
   flex-direction: row;
-  padding: 10px
+  padding: 10px;
 }
 
 .paid-container .paid_info_key {
@@ -962,6 +1054,3 @@ textarea {
   font-weight: 500;
   color: #7e2024;
 }
-
-
-
