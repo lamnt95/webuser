@@ -34,7 +34,6 @@ export default function HomeScreen() {
   const images = _.get(data, "images") || [];
   const storyMedias = _.get(data, "storyMedias") || [];
 
-  console.log("data", data)
 
   useEffect(() => {
     api.getCategory(categoryId).then(res => res.data).then(setCategory);

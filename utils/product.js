@@ -8,6 +8,11 @@ function addProduct(product = {}, productState = []) {
   return productDetails;
 }
 
+function removeProduct(productId = "", productState = []) {
+  const productDetails = _.filter(productState, i => i.productId !== productId);
+  return productDetails;
+}
+
 function getQuantity(productsKeyBy, id) {
   return _.get(productsKeyBy, `${id}.productQuantity`)
 }
@@ -25,5 +30,6 @@ function mapPriceProduct(products, productsWithQuantity) {
 
 export default {
   addProduct,
-  mapPriceProduct
+  mapPriceProduct,
+  removeProduct
 }

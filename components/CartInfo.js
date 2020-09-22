@@ -4,6 +4,8 @@ import { Dropdown, Input, Button, Form } from 'semantic-ui-react'
 import CartInfoCalendar from "./CartInfoCalendar"
 import province from "./quanhuyen/tinh_tp.json"
 import districtJSON from "./quanhuyen/quan_huyen.json"
+import utils from "../utils"
+import ErrorText from "./ErrorText"
 
 const provinceData = _.values(province);
 
@@ -31,7 +33,7 @@ const FORM_INIT = {
   sex: "MALE",
 }
 
-export default function CartInfo({ onChange }) {
+export default function CartInfo({ onChange, messageError }) {
   const [districtData, setDistricData] = useState(DICTRIC_IN_HANOI)
   const [formData, setFormData] = useState(FORM_INIT);
   const { receivedDate, addressDetail, addressType, email, fullName, phone, sex, provinceCode, districCode } = formData || {};
@@ -65,6 +67,8 @@ export default function CartInfo({ onChange }) {
           <label>Họ và tên</label>
           <Input type="text" id="Name" value={fullName} name="fullName" onChange={onChangeText} />
         </div>
+        <ErrorText errors={_.get(messageError, "fullName") || {}} />
+
         <div className="cart_info_item">
           <label>Giới tính</label>
           <Form.Group inline>
@@ -82,18 +86,26 @@ export default function CartInfo({ onChange }) {
             />
           </Form.Group>
         </div>
+        <ErrorText errors={_.get(messageError, "sex") || {}} />
+
         <div className="cart_info_item">
           <label>Email</label>
           <Input type="email" id="Email" value={email} name="email" onChange={onChangeText} />
         </div>
+        <ErrorText errors={_.get(messageError, "email") || {}} />
+
         <div className="cart_info_item">
           <label>Điện thoại</label>
           <Input type="text" id="Tel" value={phone} name="phone" onChange={onChangeText} />
         </div>
+        <ErrorText errors={_.get(messageError, "phone") || {}} />
+
         <div className="cart_info_item">
           <label>Ngày nhận</label>
           <CartInfoCalendar date={receivedDate} onChange={onChangeReceiveDate} />
         </div>
+        <ErrorText errors={_.get(messageError, "receivedDate") || {}} />
+
       </div>
       <div className="cart_info_item_row">
         <div className="cart_info_item">
@@ -110,6 +122,8 @@ export default function CartInfo({ onChange }) {
             }}
           />
         </div>
+        <ErrorText errors={_.get(messageError, "provinceCode") || {}} />
+
         <div className="cart_info_item">
           <label>Quận huyện</label>
           <Dropdown
@@ -123,10 +137,14 @@ export default function CartInfo({ onChange }) {
             }}
           />
         </div>
+        <ErrorText errors={_.get(messageError, "districCode") || {}} />
+
         <div className="cart_info_item">
           <label>Địa chỉ nhận</label>
           <Input type="text" id="Address" value={addressDetail} name="addressDetail" onChange={onChangeText} />
         </div>
+        <ErrorText errors={_.get(messageError, "addressDetail") || {}} />
+
         <div className="cart_info_item">
           <label>Loại địa chỉ</label>
           <div>
@@ -134,6 +152,8 @@ export default function CartInfo({ onChange }) {
             <Button primary={addressType === "HOME"} onClick={() => onChangeAddressType("HOME")}>Nhà riêng</Button>
           </div>
         </div>
+        <ErrorText errors={_.get(messageError, "addressType") || {}} />
+
       </div>
     </div>
   </div>

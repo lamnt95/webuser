@@ -2,13 +2,14 @@ import _ from "lodash";
 import React, { useEffect, useState, useMemo } from "react"
 import { Dropdown } from 'semantic-ui-react'
 import store from "../redux"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import api from "../api"
 import utils from "../utils"
+import ErrorText from "./ErrorText"
 
 
-function ProductRow({ item, index }) {
-  return <tr key={item.id}>
+function ProductRow({ item, index, onRemove }) {
+  return <tr key={item.productId}>
     <th scope="row">{index + 1}</th>
     <td>{item.name}</td>
     <td>{item.code}</td>
@@ -18,10 +19,17 @@ function ProductRow({ item, index }) {
     <td>{item.totalCost}</td>
     <td>{item.totalRatePromotion}</td>
     <td>{item.totalCostAfterPromotion}</td>
+    <td>
+      <button onClick={() => onRemove(item.productId)}>
+        Xoá
+      </button>
+    </td>
   </tr>
 }
 
-export default function promotionCoupon({ onChange, onSubmit }) {
+export default function promotionCoupon({ onChange, onSubmit, onValidate, messageError }) {
+
+  const dispatch = useDispatch();
 
   const products = useSelector(store.selectors.cart.getProducts);
   const cartInfo = useSelector(store.selectors.cart.getCart);
@@ -47,6 +55,7 @@ export default function promotionCoupon({ onChange, onSubmit }) {
   }, [products])
 
   const onCheck = () => {
+    if (!onValidate()) return;
     const { productDetails, receivedDate, userInfoOrder, coupon } = cartInfo || {}
     const cartBody = { productDetails, receivedDate, userInfoOrder, coupon }
     api.validateOrder(cartBody).then(res => {
@@ -66,8 +75,13 @@ export default function promotionCoupon({ onChange, onSubmit }) {
     setCoupon(value)
   }
 
+  const onRemoveProduct = (productId) => {
+    dispatch(store.actions.cart.removeStart({ product: { productId } }))
+  }
+
   return <div className="cart_container">
     <h2 className="cart_container_title">Thông tin đơn hàng</h2>
+    <ErrorText errors={_.get(messageError, "productDetails") || {}} />
     <div className="list">
       <table class="table table-bordered">
         <thead>
@@ -81,12 +95,14 @@ export default function promotionCoupon({ onChange, onSubmit }) {
             <th scope="col">Thành tiền trước khuyến mại</th>
             <th scope="col">Thành tiền được khuyến mại</th>
             <th scope="col">Thành tiền sau khuyến mại</th>
+            <th scope="col">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           {_.map(productDetail, (i, index) => <ProductRow
             item={i}
             index={index}
+            onRemove={onRemoveProduct}
           />)}
           <tr>
             <th colSpan={5}>Tổng tiền</th>

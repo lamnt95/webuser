@@ -35,7 +35,7 @@ export default function Product(props) {
 
   return <div className="product_container">
     <img src={image} className="product_img" onClick={() => onPress(name, id)} />
-    <div className="product_name" onClick={() => onPress(name, id)}>
+    <div className="product_name">
       {name}
     </div>
     <div className="product_buyWrapper">

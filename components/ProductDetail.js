@@ -4,10 +4,45 @@ import ProductSlide from "./ProductSlide"
 import { useDispatch } from "react-redux"
 import store from "../redux"
 import { toast } from 'react-toastify';
+import styled from "styled-components";
 
 const addProductSuccess = () => {
   toast.success("Thêm vào giỏ hàng thành công")
 }
+
+const ListProduct = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex:1;
+  width: 100%;
+  justify-content:center;
+`;
+const ListProduct_TitleWrapper = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-top: 100px;
+`;
+const ListProduct_Title = styled.div`
+  display: flex;
+  text-align: center;
+  font-family: Snell;
+  flex:1;
+  font-size: 36px;
+  font-weight: 500;
+  color:rgb(45, 55, 72);
+  justify-content: center;
+`;
+const ListProduct_Line = styled.div`
+  display: flex;
+  position: absolute;
+  flex:1;
+  top: 23px;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(226, 232, 240);
+`;
 
 export default function ProductDetail(props) {
   const { onPress, data } = props;
@@ -50,20 +85,21 @@ export default function ProductDetail(props) {
         <div className="product_code">
           Mã sản phẩm: {code}
         </div>
-        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>Giá gốc: {price}/{unit}</div>
-        {priceAfterPromotion && <div className="price_sale">Giá khuyến mại:
+        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>{price}/{unit}</div>
+        {priceAfterPromotion && <div className="price_sale">
           <span className="price_sale_number">
             {priceAfterPromotion}/{unit}
           </span>
         </div>}
-        <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 20 }}>
+        <div className="product_line"></div>
+        <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 60 }}>
           <div className="left">
-            <div className="minus" onClick={onDescreare}>-</div>
+            <div className={`minus ${productQuantity == 0 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>
             <input type="text" value={productQuantity || 0} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" />
             <div className="plus" onClick={onIncreare}>+</div>
           </div>
           <div className="right">
-            <div className="order" onClick={onClickAddToCart}>Đặt mua</div>
+            <div className="order" onClick={onClickAddToCart}>Đặt hàng</div>
           </div>
         </div>
       </div>
@@ -74,5 +110,13 @@ export default function ProductDetail(props) {
         {description}
       </div>
     </div>
+    <ListProduct>
+      <ListProduct_TitleWrapper>
+        <ListProduct_Line />
+        <ListProduct_Title >
+          <div style={{ backgroundColor: "#ece9c4", height: "40px", lineHeight: "40px", zIndex: 100, paddingLeft: "20px", paddingRight: "20px" }}>Sản phẩm cùng nhóm hàng</div>
+        </ListProduct_Title>
+      </ListProduct_TitleWrapper>
+    </ListProduct>
   </div>
 }
