@@ -106,8 +106,7 @@ export default function ProductDetail(props) {
     </div>
     <div className="product_detail_info">
       <div className="title">Thông tin sản phẩm</div>
-      <div className="content">
-        {description}
+      <div className="content" dangerouslySetInnerHTML={{ __html: description }}>
       </div>
     </div>
     <ListProduct>
