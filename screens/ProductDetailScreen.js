@@ -29,7 +29,7 @@ export default function ProductDetailScreen() {
         api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(setProducts);
       }
     })
-  }, [productId])
+  })
 
   return <div>
     <Header />
