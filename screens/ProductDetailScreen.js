@@ -26,17 +26,19 @@ export default function ProductDetailScreen() {
       setProduct({ ...res, productQuantity: 0 })
       if (!_.isUndefined(categoryId)) {
         api.getCategory(categoryId).then(setCategory)
-        api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(setProducts);
+        api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(res => {
+          setTimeout(() => { setProducts(res) }, 500)
+        });
       }
     })
-  })
+  }, [productId])
 
   return <div>
     <Header />
     <Menu />
     <ProductDetail data={product} />
     <Products data={products} />
-    <div style={{ display: "flex", flex: 1, height: "80px", width: "100%", backgroundColor:"#ece9c4" }} />
+    <div style={{ display: "flex", flex: 1, height: "80px", width: "100%", backgroundColor: "#ece9c4" }} />
     <VideoIntro videoIntro={videoIntro} />
     <Map />
     <Footer />
