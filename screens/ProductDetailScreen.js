@@ -21,18 +21,22 @@ export default function ProductDetailScreen() {
   const { videoIntro } = category || {};
 
   useEffect(() => {
-    api.getProductById(productId).then(res => {
-      const { categoryId } = res || {}
-      setProduct({ ...res, productQuantity: 0 })
-      if (!_.isUndefined(categoryId)) {
-        api.getCategory(categoryId).then(setCategory)
-        api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(res => {
-          setTimeout(() => { setProducts(res) }, 500)
-        });
-      }
-    })
-  }, [productId])
+    if (!_.isEmpty(productId)) {
+      api.getProductById(productId).then(res => {
+        const { categoryId } = res || {}
+        console.log("getProductById response", res)
+        setProduct({ ...res, productQuantity: 0 })
+        if (!_.isUndefined(categoryId)) {
+          api.getCategory(categoryId).then(setCategory)
+          api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(res => {
+            setTimeout(() => { setProducts(res) }, 500)
+          });
+        }
+      })
+    }
 
+  }, [productId])
+  console.log("product", product)
   return <div>
     <Header />
     <Menu />

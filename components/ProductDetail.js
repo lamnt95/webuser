@@ -50,6 +50,8 @@ export default function ProductDetail(props) {
   const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id, unit } = product || {}
   const dispatch = useDispatch();
 
+  console.log("ProductDetail", product)
+
   useEffect(() => {
     setProduct(data)
   }, [data])
