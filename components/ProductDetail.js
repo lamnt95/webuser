@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux"
 import store from "../redux"
 import { toast } from 'react-toastify';
 import styled from "styled-components";
+import utils from "../utils"
 
 const addProductSuccess = () => {
   toast.success("Thêm vào giỏ hàng thành công")
@@ -41,13 +42,13 @@ const ListProduct_Line = styled.div`
   top: 23px;
   width: 100%;
   height: 2px;
-  background-color: rgb(226, 232, 240);
+  background-color: rgb(45 55 72 / 14%);
 `;
 
 export default function ProductDetail(props) {
   const { onPress, data } = props;
   const [product, setProduct] = useState();
-  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id, unit } = product || {}
+  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id, unit, summary } = product || {}
   const dispatch = useDispatch();
 
   console.log("ProductDetail", product)
@@ -87,13 +88,14 @@ export default function ProductDetail(props) {
         <div className="product_code">
           Mã sản phẩm: {code}
         </div>
-        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>{price}/{unit}</div>
+        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>{utils.formatMoney(price)}/{unit}</div>
         {priceAfterPromotion && <div className="price_sale">
           <span className="price_sale_number">
-            {priceAfterPromotion}/{unit}
+            {utils.formatMoney(priceAfterPromotion)}/{unit}
           </span>
         </div>}
         <div className="product_line"></div>
+      <div className="product_summary" dangerouslySetInnerHTML={{ __html: summary }}/>
         <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 60 }}>
           <div className="left">
             <div className={`minus ${productQuantity == 0 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>

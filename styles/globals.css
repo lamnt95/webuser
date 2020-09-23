@@ -16,7 +16,7 @@ a {
 }
 
 @font-face {
-  font-family: 'Snell';
+  font-family: "Snell";
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -88,7 +88,7 @@ a {
   border: 1px solid transparent;
 }
 
-.product_container:hover  .product_img{
+.product_container:hover .product_img {
   border: 1px solid #86bc42;
 }
 
@@ -121,7 +121,7 @@ a {
 .product_price_text {
   font-family: "Taviraj", serif;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 16px;
   margin-right: 5px;
 }
 
@@ -250,7 +250,7 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 10px;
+  padding-top: 70px;
   width: 100%;
 }
 
@@ -764,7 +764,9 @@ a {
   background-color: #ece9c4;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 17px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .product_detail_info {
@@ -781,18 +783,19 @@ a {
 }
 
 .product_detail_info .content {
+  font-family: "Taviraj";
+  font-size: 16px;
   text-align: justify;
   margin-top: 70px;
   margin-top: 35px;
 }
 
-.product_detail_info .content img{
+.product_detail_info .content img {
   width: 100%;
 }
 
 .product_detail_container {
   display: flex;
-  width: 70%;
   flex-direction: row;
 }
 
@@ -809,7 +812,7 @@ a {
 }
 
 .product_detail .product_code {
-  margin-top: 20px;
+  margin-top: 17px;
   font-family: Taviraj;
   font-size: 16px;
   opacity: 0.5;
@@ -823,11 +826,29 @@ a {
   margin-top: 40px;
 }
 
-.product_detail .product_line{
+.product_detail .product_line {
   display: flex;
   width: 100%;
-  border-bottom: 1px solid rgb(226, 232, 240);
+  border-bottom: 1px solid rgb(45 55 72 / 14%);
+  margin-top: 20px;
+}
+
+.product_detail .product_summary {
+  display: flex;
   margin-top: 17px;
+  flex-direction: column;
+  color: rgb(45, 55, 72);
+  /* font-family: 'Quicksand', sans-serif; */
+  font-family: 'Taviraj', sans-serif;
+  font-size: 16px;
+}
+
+.product_detail .product_summary p {
+  margin-bottom: 2px;
+}
+
+.product_detail .product_summary strong {
+  font-weight: 500;
 }
 
 .product_detail .priceWithSale {
@@ -840,7 +861,7 @@ a {
   margin-top: 10px;
 }
 
-.price_sale_number { 
+.price_sale_number {
   font-family: Taviraj;
   font-weight: 600;
   font-size: 20px;
@@ -868,7 +889,6 @@ a {
   font-size: 30px;
   color: #7e2024;
 }
-
 
 .product_slide .carousel-indicators li {
   height: 20px;

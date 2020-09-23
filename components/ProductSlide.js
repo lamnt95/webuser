@@ -11,7 +11,8 @@ import { v4 as uuidv4 } from "uuid"
 
 const Img = styled.img`
   width:100%;
-  max-height:400px;
+  max-height:500px;
+  height: 500px;
 `;
 
 const ProductSlide = ({ images = [] }) => {
