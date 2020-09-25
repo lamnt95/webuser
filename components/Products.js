@@ -13,6 +13,6 @@ export default function Products({ data = [] }) {
   }
   const length = _.size(data)
   return <div className={`products ${length == 1 ? "products-one-item" : ""}`} id="products">
-    {_.map(data, i => <Product onPress={onClick} price={i.price} name={i.name} id={i.id} key={i.id} image={i.image} unit={i.unit} />)}
+    {_.map(data, i => <Product onPress={onClick} price={i.price} name={i.name} id={i.id} key={i.id} image={i.image} unit={i.unit} priceAfterPromotion={i.priceAfterPromotion} />)}
   </div>
 }
