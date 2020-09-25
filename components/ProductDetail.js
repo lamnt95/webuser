@@ -48,11 +48,9 @@ const ListProduct_Line = styled.div`
 export default function ProductDetail(props) {
   const { onPress, data } = props;
   const [product, setProduct] = useState();
-  const { name, code, price, productQuantity, description, subImages, id, unit, summary } = product || {}
+  const { name, code, price, productQuantity, description, subImages, id, unit, summary, priceAfterPromotion } = product || {}
   const dispatch = useDispatch();
 
-  const priceAfterPromotion = 10000;
-  // const priceAfterPromotion = undefined;
   const isPriceDiffPriceAfterPromotion = price !== priceAfterPromotion;
   const isPromotion = isPriceDiffPriceAfterPromotion && _.isNumber(priceAfterPromotion)
 
@@ -100,7 +98,7 @@ export default function ProductDetail(props) {
           </span>
         </div>}
         <div className="product_line"></div>
-      <div className="product_summary" dangerouslySetInnerHTML={{ __html: summary }}/>
+        <div className="product_summary" dangerouslySetInnerHTML={{ __html: summary }} />
         <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 60 }}>
           <div className="left">
             <div className={`minus ${productQuantity == 1 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>

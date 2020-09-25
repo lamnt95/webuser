@@ -9,9 +9,7 @@ const addProductSuccess = () => {
 }
 
 export default function Product(props) {
-  const { onPress, name, price, id, image, unit } = props;
-
-  const priceAfterPromotion = 10000;
+  const { onPress, name, price, id, image, unit, priceAfterPromotion } = props;
 
   const dispatch = useDispatch();
   const [product, setProduct] = useState({
