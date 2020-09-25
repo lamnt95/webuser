@@ -48,8 +48,13 @@ const ListProduct_Line = styled.div`
 export default function ProductDetail(props) {
   const { onPress, data } = props;
   const [product, setProduct] = useState();
-  const { name, code, price, priceAfterPromotion, productQuantity, description, subImages, id, unit, summary } = product || {}
+  const { name, code, price, productQuantity, description, subImages, id, unit, summary } = product || {}
   const dispatch = useDispatch();
+
+  const priceAfterPromotion = 10000;
+  // const priceAfterPromotion = undefined;
+  const isPriceDiffPriceAfterPromotion = price !== priceAfterPromotion;
+  const isPromotion = isPriceDiffPriceAfterPromotion && _.isNumber(priceAfterPromotion)
 
   console.log("ProductDetail", product)
 
@@ -58,17 +63,17 @@ export default function ProductDetail(props) {
   }, [data])
 
   const onDescreare = () => {
-    const newProductQuantity = productQuantity - 1 < 0 ? 0 : productQuantity - 1
+    const newProductQuantity = productQuantity - 1 < 1 ? 1 : productQuantity - 1
     setProduct({ ...product, productQuantity: newProductQuantity })
   }
 
   const onIncreare = () => {
-    const newProductQuantity = productQuantity + 1 < 0 ? 0 : productQuantity + 1
+    const newProductQuantity = productQuantity + 1 < 1 ? 1 : productQuantity + 1
     setProduct({ ...product, productQuantity: newProductQuantity })
   }
 
   const onClickAddToCart = () => {
-    if (productQuantity === 0 || _.isNull(productQuantity)) return;
+    if (productQuantity === 1 || _.isNull(productQuantity)) return;
     const product = {
       productId: id,
       productQuantity
@@ -88,8 +93,8 @@ export default function ProductDetail(props) {
         <div className="product_code">
           Mã sản phẩm: {code}
         </div>
-        <div className={`price ${priceAfterPromotion ? "priceWithSale" : ""}`}>{utils.formatMoney(price)}/{unit}</div>
-        {priceAfterPromotion && <div className="price_sale">
+        <div className={`price ${isPromotion ? "price_have_promotion" : ""}`}>{utils.formatMoney(price)}/{unit}</div>
+        {isPromotion && <div className="price_sale">
           <span className="price_sale_number">
             {utils.formatMoney(priceAfterPromotion)}/{unit}
           </span>
@@ -98,8 +103,8 @@ export default function ProductDetail(props) {
       <div className="product_summary" dangerouslySetInnerHTML={{ __html: summary }}/>
         <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 60 }}>
           <div className="left">
-            <div className={`minus ${productQuantity == 0 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>
-            <input type="text" value={productQuantity || 0} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" />
+            <div className={`minus ${productQuantity == 1 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>
+            <input type="text" value={productQuantity || 1} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" />
             <div className="plus" onClick={onIncreare}>+</div>
           </div>
           <div className="right">
