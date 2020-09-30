@@ -71,7 +71,7 @@ export default function ProductDetail(props) {
   }
 
   const onClickAddToCart = () => {
-    if (productQuantity === 1 || _.isNull(productQuantity)) return;
+    if (productQuantity === 0 || _.isNull(productQuantity)) return;
     const product = {
       productId: id,
       productQuantity

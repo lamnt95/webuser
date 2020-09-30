@@ -8,20 +8,22 @@ export default function Paid() {
     <div className="list">
       <Form.Group inline>
         <Form.Radio
-          label='Thanh toán bằng tiền mặt'
+          style={{ fontSize: "16px", color: "rgb(96, 98, 102)" }}
+          label='Thanh toán bằng tiền mặt khi nhận hàng'
           value='TIENMAT'
           checked={paidStatus === 'TIENMAT'}
           onChange={() => setPaidStatus("TIENMAT")}
         />
         <Form.Radio
-          label='Thanh toán bằng chuyển khoản'
+          style={{ fontSize: "16px", color: "rgb(96, 98, 102)" }}
+          label='Thanh toán trước bằng chuyển khoản'
           value='CHUYENKHOAN'
           checked={paidStatus === 'CHUYENKHOAN'}
           onChange={() => setPaidStatus("CHUYENKHOAN")}
         />
       </Form.Group>
       {paidStatus === 'CHUYENKHOAN' && <div>
-        <div className="paid_title">Thông tin tài khoản</div>
+        <div className="paid_title" style={{fontSize:"16px",color:"rgb(144, 147, 153)" }}>Thông tin tài khoản</div>
         <div className="paid_info">
           <div className="paid_info_key">Ngân hàng</div>
           <div className="paid_info_value">Ngân hàng ABCDXYS</div>

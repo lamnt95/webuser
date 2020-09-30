@@ -31,7 +31,7 @@ export default function Product(props) {
   }
 
   const onClickAddToCart = () => {
-    if (productQuantity === 1) return;
+    if (productQuantity === 0) return;
 
     dispatch(store.actions.cart.insertStart({ product }, { onSuccess: addProductSuccess }))
   }

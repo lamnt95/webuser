@@ -6,6 +6,20 @@ import province from "./quanhuyen/tinh_tp.json"
 import districtJSON from "./quanhuyen/quan_huyen.json"
 import utils from "../utils"
 import ErrorText from "./ErrorText"
+import styled from "styled-components"
+
+const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 30px;
+  width: 100%;
+`;
+
+const ErrroSpace = styled.div`
+  display: flex;
+  width: 200px;
+  height: 100%;
+`;
 
 const provinceData = _.values(province);
 
@@ -73,6 +87,7 @@ export default function CartInfo({ onChange, messageError }) {
           <label>Giới tính</label>
           <Form.Group inline>
             <Form.Radio
+              style={{ fontSize: "16px" }}
               label='Anh'
               value='MALE'
               checked={sex === 'MALE'}
@@ -86,25 +101,37 @@ export default function CartInfo({ onChange, messageError }) {
             />
           </Form.Group>
         </div>
-        <ErrorText errors={_.get(messageError, "sex") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "sex") || {}} />
+        </ErrorWrapper>
 
         <div className="cart_info_item">
           <label>Email</label>
           <Input type="email" id="Email" value={email} name="email" onChange={onChangeText} />
         </div>
-        <ErrorText errors={_.get(messageError, "email") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "email") || {}} />
+        </ErrorWrapper>
 
         <div className="cart_info_item">
           <label>Điện thoại</label>
           <Input type="text" id="Tel" value={phone} name="phone" onChange={onChangeText} />
         </div>
-        <ErrorText errors={_.get(messageError, "phone") || {}} />
+        <ErrorWrapper>
+          <ErrorText errors={_.get(messageError, "phone") || {}} />
+          <ErrroSpace />
+        </ErrorWrapper>
 
         <div className="cart_info_item">
           <label>Ngày nhận</label>
           <CartInfoCalendar date={receivedDate} onChange={onChangeReceiveDate} />
         </div>
-        <ErrorText errors={_.get(messageError, "receivedDate") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "receivedDate") || {}} />
+        </ErrorWrapper>
 
       </div>
       <div className="cart_info_item_row">
@@ -114,6 +141,7 @@ export default function CartInfo({ onChange, messageError }) {
             placeholder='Chọn tỉnh thành phố'
             fluid
             selection
+            style={{ fontSize: "16px" }}
             value={provinceCode}
             options={provinceData}
             onChange={(e, { value }) => {
@@ -122,13 +150,17 @@ export default function CartInfo({ onChange, messageError }) {
             }}
           />
         </div>
-        <ErrorText errors={_.get(messageError, "provinceCode") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "provinceCode") || {}} />
+        </ErrorWrapper>
 
         <div className="cart_info_item">
           <label>Quận huyện</label>
           <Dropdown
             placeholder='Chọn quận huyện'
             fluid
+            style={{ fontSize: "16px" }}
             value={districCode}
             selection
             options={districtData}
@@ -137,22 +169,35 @@ export default function CartInfo({ onChange, messageError }) {
             }}
           />
         </div>
-        <ErrorText errors={_.get(messageError, "districCode") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "districCode") || {}} />
+        </ErrorWrapper>
 
         <div className="cart_info_item">
           <label>Địa chỉ nhận</label>
           <Input type="text" id="Address" value={addressDetail} name="addressDetail" onChange={onChangeText} />
         </div>
-        <ErrorText errors={_.get(messageError, "addressDetail") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "addressDetail") || {}} />
+        </ErrorWrapper>
 
         <div className="cart_info_item">
           <label>Loại địa chỉ</label>
           <div>
-            <Button primary={addressType === "COMPANY"} onClick={() => onChangeAddressType("COMPANY")}>Công ty</Button>
-            <Button primary={addressType === "HOME"} onClick={() => onChangeAddressType("HOME")}>Nhà riêng</Button>
+            <Button primary={addressType === "COMPANY"} onClick={() => onChangeAddressType("COMPANY")}
+              style={{ fontSize: "16px" }}
+            >Công ty</Button>
+            <Button primary={addressType === "HOME"} onClick={() => onChangeAddressType("HOME")}
+              style={{ fontSize: "16px" }}
+            >Nhà riêng</Button>
           </div>
         </div>
-        <ErrorText errors={_.get(messageError, "addressType") || {}} />
+        <ErrorWrapper>
+          <ErrroSpace />
+          <ErrorText errors={_.get(messageError, "addressType") || {}} />
+        </ErrorWrapper>
 
       </div>
     </div>

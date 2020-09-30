@@ -2,7 +2,6 @@ import _ from 'lodash'
 import React, { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import CartInfo from "./CartInfo"
-import Paid from "./Paid"
 import CartMoney from "./CartMoney"
 import utils from "../utils"
 import store from "../redux"
@@ -83,7 +82,6 @@ export default function ShoppingCart(props) {
 
   return <div className="shopping_cart_container">
     <CartInfo onChange={onChangeFormInfo} messageError={messageError} />
-    <Paid />
     <CartMoney onChange={onChangeCartMoney} onSubmit={onSubmit} onValidate={onValidate} messageError={messageError} />
   </div>
 

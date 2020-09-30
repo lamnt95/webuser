@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const errors = {
   empty: {
-    msg: 'Thông tin này không được bỏ trống.',
+    msg: 'Vui lòng điền đầy đủ thông tin này',
     isError: (value) => _.isEmpty(value),
   },
   emptyProduct: {
@@ -53,7 +53,7 @@ export const orderConfig = [
   { field: 'fullName', empty: true },
   { field: 'phone', empty: true },
   { field: 'sex', empty: true },
-  { field: 'productDetails', emptyProduct: true },
+  // { field: 'productDetails', emptyProduct: true },
 ];
 
 export function validateOrder(data = {}, responseError = []) {

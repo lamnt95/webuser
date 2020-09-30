@@ -6,25 +6,115 @@ import { useSelector, useDispatch } from "react-redux"
 import api from "../api"
 import utils from "../utils"
 import ErrorText from "./ErrorText"
+import styled from "styled-components"
+import Paid from "./Paid";
+
+const Td = styled.td`
+  color: rgb(96, 98, 102);
+  font-size: 16px;
+  height: 89px;
+  line-height: 89px;
+`;
+
+const Tr = styled.tr`
+  &:hover{
+    background-color: rgb(245, 247, 250);
+  }
+`
+
+const WrapperBtn = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%; 
+  justify-content: center;
+`;
+
+
+const InfoGroup = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items: center;
+  `;
+
+const Name = styled.div`
+ color: rgb(96, 98, 102);
+  font-size: 16px;
+  height: 89px;
+  line-height: 89px;
+`;
+
+const Avatar = styled.img`
+  width: 64px;
+  height: 64px;
+  border-radius: 5px;
+`;
+
+const Remove = styled.div`
+  color: rgb(96, 98, 105);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover{
+    color: red;
+  }
+`;
 
 
 function ProductRow({ item, index, onRemove }) {
-  return <tr key={item.productId}>
-    <th scope="row">{index + 1}</th>
-    <td>{item.name}</td>
-    <td>{item.code}</td>
-    <td>{item.quantity}</td>
-    <td>{item.price}</td>
-    <td>{item.priceAfterPromotion}</td>
-    <td>{item.totalCost}</td>
-    <td>{item.totalRatePromotion}</td>
-    <td>{item.totalCostAfterPromotion}</td>
-    <td>
-      <button onClick={() => onRemove(item.productId)}>
+  const { quantity: productQuantity, productId } = item || {}
+  const dispatch = useDispatch();
+
+  const onDescreare = () => {
+    const newProductQuantity = productQuantity - 1 < 1 ? 1 : productQuantity - 1
+    dispatch(store.actions.cart.insertStart({ product: { productId, productQuantity: newProductQuantity } }, { onSuccess: () => { } }))
+
+  };
+  const onIncreare = () => {
+    const newProductQuantity = productQuantity + 1 < 1 ? 1 : productQuantity + 1
+    dispatch(store.actions.cart.insertStart({ product: { productId, productQuantity: newProductQuantity } }, { onSuccess: () => { } }))
+  };
+
+
+  return <Tr key={item.productId} style={{
+    color: "rgb(96, 98, 102)!important;", fontSize: "16px", justifyContent: "center",
+    alignItems: "center",
+  }}>
+    <Td >
+      <InfoGroup>
+        <Name>
+          {item.name}
+        </Name>
+        <Avatar src={item.image} />
+      </InfoGroup>
+    </Td>
+    <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.price) || 0}</Td>
+    <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.priceAfterPromotio) || 0}</Td>
+    <Td>
+      <WrapperBtn>
+        <div className="product_book" style={{ display: "flex" }}>
+          <div className="left" style={{ alignItems: "center" }}>
+            <div className={`minus ${productQuantity == 1 ? "minus-zero" : ""}`} onClick={onDescreare} style={{
+              borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopLeftRadius:
+                "5px", borderBottomLeftRadius: "5px"
+            }}>-</div>
+            <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" style={{ borderColor: "#c0c4cc", width: "100px" }} />
+            <div className="plus" onClick={onIncreare} style={{
+              borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopRightRadius:
+                "5px", borderBottomRightRadius: "5px"
+            }}>+</div>
+          </div>
+        </div>
+      </WrapperBtn>
+    </Td>
+
+    <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.totalCostAfterPromotion) || 0}</Td>
+    <Td style={{ textAlign: "center" }}>
+      <Remove onClick={() => onRemove(item.productId)}>
         Xoá
-      </button>
-    </td>
-  </tr>
+      </Remove>
+    </Td>
+  </Tr >
 }
 
 export default function promotionCoupon({ onChange, onSubmit, onValidate, messageError }) {
@@ -79,23 +169,19 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
     dispatch(store.actions.cart.removeStart({ product: { productId } }))
   }
 
-  return <div className="cart_container">
+  return <> <div className="cart_container">
     <h2 className="cart_container_title">Thông tin đơn hàng</h2>
     <ErrorText errors={_.get(messageError, "productDetails") || {}} />
     <div className="list">
-      <table class="table table-bordered">
+      <table class="table">
         <thead>
-          <tr class="table-primary">
-            <th scope="col">STT</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Mã sản phẩm</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Đơn giá trước khuyến mại</th>
-            <th scope="col">Đơn giá sau khuyến mại</th>
-            <th scope="col">Thành tiền trước khuyến mại</th>
-            <th scope="col">Thành tiền được khuyến mại</th>
-            <th scope="col">Thành tiền sau khuyến mại</th>
-            <th scope="col">Thao tác</th>
+          <tr>
+            <th scope="col" style={{ borderTop: "0px", borderBottom: "0px", color: "rgb(144, 147, 153)!important", fontSize: "16px" }}>Sản phẩm</th>
+            <th scope="col" style={{ borderTop: "0px", borderBottom: "0px", color: "rgb(144, 147, 153)!important", fontSize: "16px", textAlign: "right" }}>Đơn giá</th>
+            <th scope="col" style={{ borderTop: "0px", borderBottom: "0px", color: "rgb(144, 147, 153)!important", fontSize: "16px", textAlign: "right" }}>Đơn giá sau chiết khấu</th>
+            <th scope="col" style={{ borderTop: "0px", borderBottom: "0px", color: "rgb(144, 147, 153)!important", fontSize: "16px", textAlign: "center" }}>Số lượng</th>
+            <th scope="col" style={{ borderTop: "0px", borderBottom: "0px", color: "rgb(144, 147, 153)!important", fontSize: "16px", textAlign: "right" }}>Thành tiền</th>
+            <th scope="col" style={{ borderTop: "0px", borderBottom: "0px", color: "rgb(144, 147, 153)!important", fontSize: "16px", textAlign: "center" }}>Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -104,20 +190,20 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
             index={index}
             onRemove={onRemoveProduct}
           />)}
-          <tr>
-            <th colSpan={5}>Tổng tiền</th>
-            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalCost}</td>
+          <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
+            <th colSpan={1} >Tổng tạm tính</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(totalCost) || 0}</td>
           </tr>
-          <tr>
+          {/* <tr>
             <th colSpan={5}>Tổng tiền được khuyến mại</th>
             <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalRatePromotion}</td>
           </tr>
           <tr>
             <th colSpan={5}>Tổng tiền sau khuyến mại</th>
             <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalCostAfterPromotion}</td>
-          </tr>
-          <tr>
-            <th colSpan={5} style={{ verticalAlign: "middle" }}>Mã khuyến mại</th>
+          </tr> */}
+          {_.size(promotionCouponDropdown) > 0 && <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
+            <th colSpan={1} style={{ verticalAlign: "middle" }}>Nhập mã khuyến mại</th>
             <td colSpan={5} >
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Dropdown
@@ -131,21 +217,18 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
                 />
               </div>
             </td>
+          </tr>}
+          <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
+            <th colSpan={1}>Giảm trừ</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(valueCoupon) || 0}</td>
           </tr>
-          <tr>
-            <th colSpan={5}>Giá trị coupon</th>
-            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{valueCoupon || 0}</td>
-          </tr>
-          <tr>
-            <th colSpan={5}>Tổng tiền thanh toán thực tế</th>
-            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{valuePayment}</td>
+          <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
+            <th colSpan={1}>Tổng thanh toán</th>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(valuePayment) || 0}</td>
           </tr>
         </tbody>
       </table>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
-        <div className="cart_container_submit" style={{ height: '50px' }}>
-          <div className="cart_container_submit_text" onClick={onCheck}>Kiểm tra đơn hàng</div>
-        </div>
         {isChecked && <div className="cart_container_submit" style={{ height: '50px' }}>
           <div className="cart_container_submit_text" onClick={onSubmit}>Đặt hàng</div>
         </div>}
@@ -153,4 +236,11 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
 
     </div>
   </div>
+  <Paid />
+    <div className="cart_container" style={{paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px"}}>
+      <div className="cart_container_submit" style={{ height: '50px' }}>
+        <div className="cart_container_submit_text" onClick={onCheck}>Kiểm tra đơn hàng</div>
+      </div>
+    </div>
+  </>
 }

@@ -25,6 +25,7 @@ function mapPriceProduct(products, productsWithQuantity) {
     code: i.code,
     price: i.price,
     quantity: getQuantity(productsKeyBy, i.id),
+    image: i.image
   }))
 }
 

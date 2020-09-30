@@ -5,10 +5,10 @@ import styled from "styled-components"
 const Error = styled.div`
   color: red;
   font-size: 13px;
-  text-align:center;
+  padding-left: 230px;
 `;
 
 export default function ErrorText({ errors }) {
   return errors &&
-    _.map(errors, (error) => <Error>{error}</Error>)
+    _.map(errors, (error) => error ? <Error>{error}</Error> : null)
 }

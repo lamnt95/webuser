@@ -300,9 +300,13 @@ a {
   font-weight: 400;
   text-align: justify;
   color: #7e2024;
-  font-family: "Taviraj", serif;
+  font-family: "Taviraj", serif!important;
   font-size: 16px;
   line-height: 1.33;
+}
+
+.story_text h1,h2,h3,h4,h5,h6 {
+  font-family: "Taviraj", serif!important;
 }
 
 .story_slide_container .carousel-indicators li {
@@ -366,6 +370,11 @@ a {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.33;
+}
+
+
+.policy-text h1,h2,h3,h4,h5,h6 {
+  font-family: "Taviraj", serif!important;
 }
 
 .video_intro {
@@ -958,6 +967,7 @@ a {
   align-items: center;
   padding-left: 100px;
   padding-right: 100px;
+  font-family: "Taviraj"!important;
 }
 
 /* Cart info */
@@ -974,8 +984,8 @@ a {
 
 .shopping_cart_container .cart_container_title {
   font-family: Roboto;
-  font-weight: bold;
-  font-size: 30px;
+  font-weight: 400;
+  font-size: 20px;
   color: #7e2024;
   padding: 20px;
   padding-bottom: 0px;
@@ -1044,28 +1054,28 @@ a {
   display: flex;
   width: 200px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .cart_info_container .cart_info_item .code {
   display: flex;
   width: 200px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .cart_info_container .cart_info_item input,
 textarea {
   display: flex;
   width: 300px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .cart_info_container .cart_info_item input,
 textarea {
   display: flex;
   width: 300px !important;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .cart_info_container .cart_info_item .dropdown {
@@ -1113,6 +1123,8 @@ textarea {
   display: flex;
   flex-direction: row;
   font-weight: 500;
+  color: rgb(96, 98, 102);
+  width: 200px
 }
 
 .paid-container .paid_info_value {
@@ -1120,4 +1132,11 @@ textarea {
   margin-left: 10px;
   font-weight: 500;
   color: #7e2024;
+}
+
+.paid-container .list label {
+  color: rgb(96, 98, 102)
+}
+
+.paid-container {
 }
