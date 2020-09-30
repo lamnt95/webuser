@@ -1,6 +1,7 @@
 import axios from "axios";
 import _ from "lodash";
 import { toast } from 'react-toastify';
+import utils from "../utils"
 
 const requestCache = {};
 
@@ -40,7 +41,9 @@ function callApi(
       return Promise.reject(response.data);
     })
     .catch(err => {
-      // toast.error(err)
+      const { error } = _.get(err, "response.data") || {}
+      const message = utils.getErrorMessage(error)
+      toast.error(message)
       return Promise.reject(err);
     });
 }

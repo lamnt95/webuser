@@ -4,6 +4,7 @@ import product from "./product"
 import date from "./date"
 import format from "./format"
 import validate from "./validate"
+import error from "./error"
 
 export default {
   ...slug,
@@ -11,5 +12,6 @@ export default {
   ...product,
   ...date,
   ...format,
-  ...validate
+  ...validate,
+  ...error
 }

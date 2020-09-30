@@ -62,9 +62,9 @@ const Remove = styled.div`
 
 
 function ProductRow({ item, index, onRemove }) {
-  const { quantity: productQuantity, productId } = item || {}
+  const { productQuantity, productId } = item || {}
   const dispatch = useDispatch();
-
+  console.log("product", item)
   const onDescreare = () => {
     const newProductQuantity = productQuantity - 1 < 1 ? 1 : productQuantity - 1
     dispatch(store.actions.cart.insertStart({ product: { productId, productQuantity: newProductQuantity } }, { onSuccess: () => { } }))
@@ -89,7 +89,7 @@ function ProductRow({ item, index, onRemove }) {
       </InfoGroup>
     </Td>
     <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.price) || 0}</Td>
-    <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.priceAfterPromotio) || 0}</Td>
+    <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.priceAfterPromotion) || 0}</Td>
     <Td>
       <WrapperBtn>
         <div className="product_book" style={{ display: "flex" }}>
@@ -142,21 +142,26 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
     const productIdList = _.map(products, i => i.productId)
     api.getProductsByMultiId(productIdList).then(res => utils.mapPriceProduct(res, products)).then(setProductDetail)
     api.getPromotionCoupon().then(setPromotionCoupon);
-  }, [products])
+    setTimeout(() => { onCheck(true) }, 100)
+  }, [])
 
-  const onCheck = () => {
-    if (!onValidate()) return;
+  useEffect(() => {
+    onCheck(true)
+  }, [coupon, products])
+
+  const onCheck = (isOnlyProduct) => {
+    if (!isOnlyProduct && !onValidate()) return;
     const { productDetails, receivedDate, userInfoOrder, coupon } = cartInfo || {}
-    const cartBody = { productDetails, receivedDate, userInfoOrder, coupon }
+    const cartBody = isOnlyProduct ? { productDetails, receivedDate: utils.formatDate(new Date()), coupon } : { productDetails, receivedDate, userInfoOrder, coupon }
     api.validateOrder(cartBody).then(res => {
       const { productDetails, totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment } = res || {}
       const productDetailKeyBy = _.keyBy(productDetail, "productId") || {}
-      const productDetailsNew = _.map(productDetails, i => ({ ...i, ...(productDetailKeyBy[i.productId] || {}) }))
+      const productDetailsNew = _.map(productDetails, i => ({ ...(productDetailKeyBy[i.productId] || {}), ...i }))
       setProductDetail(productDetailsNew)
       const costDetailNew = { totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment }
       setCostDetail(costDetailNew)
       setIsChecked(true)
-    })
+    }).catch(console.log)
   }
 
   const onChangeCoupon = (e, data) => {
@@ -205,7 +210,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
           {_.size(promotionCouponDropdown) > 0 && <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
             <th colSpan={1} style={{ verticalAlign: "middle" }}>Nhập mã khuyến mại</th>
             <td colSpan={5} >
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
                 <Dropdown
                   style={{ width: 200 }}
                   placeholder='Chọn mã khuyến mại'
@@ -215,6 +220,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
                   options={promotionCouponDropdown}
                   onChange={onChangeCoupon}
                 />
+                <div style={{ marginLeft: "20px", fontWeight: "700", cursor: "pointer" }} onClick={() => onChangeCoupon(null, { value: null })}>Xóa</div>
               </div>
             </td>
           </tr>}
@@ -236,10 +242,10 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
 
     </div>
   </div>
-  <Paid />
-    <div className="cart_container" style={{paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px"}}>
+    <Paid />
+    <div className="cart_container" style={{ paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px" }}>
       <div className="cart_container_submit" style={{ height: '50px' }}>
-        <div className="cart_container_submit_text" onClick={onCheck}>Kiểm tra đơn hàng</div>
+        <div className="cart_container_submit_text" onClick={() => onCheck(false)}>Kiểm tra đơn hàng</div>
       </div>
     </div>
   </>

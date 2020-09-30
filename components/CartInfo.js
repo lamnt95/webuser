@@ -101,37 +101,25 @@ export default function CartInfo({ onChange, messageError }) {
             />
           </Form.Group>
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "sex") || {}} />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "sex") || {}} />
 
         <div className="cart_info_item">
           <label>Email</label>
           <Input type="email" id="Email" value={email} name="email" onChange={onChangeText} />
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "email") || {}} />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "email") || {}} />
 
         <div className="cart_info_item">
           <label>Điện thoại</label>
           <Input type="text" id="Tel" value={phone} name="phone" onChange={onChangeText} />
         </div>
-        <ErrorWrapper>
-          <ErrorText errors={_.get(messageError, "phone") || {}} />
-          <ErrroSpace />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "phone") || {}} />
 
         <div className="cart_info_item">
           <label>Ngày nhận</label>
           <CartInfoCalendar date={receivedDate} onChange={onChangeReceiveDate} />
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "receivedDate") || {}} />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "receivedDate") || {}} />
 
       </div>
       <div className="cart_info_item_row">
@@ -150,10 +138,7 @@ export default function CartInfo({ onChange, messageError }) {
             }}
           />
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "provinceCode") || {}} />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "provinceCode") || {}} />
 
         <div className="cart_info_item">
           <label>Quận huyện</label>
@@ -169,19 +154,14 @@ export default function CartInfo({ onChange, messageError }) {
             }}
           />
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "districCode") || {}} />
-        </ErrorWrapper>
+
+        <ErrorText errors={_.get(messageError, "districCode") || {}} />
 
         <div className="cart_info_item">
           <label>Địa chỉ nhận</label>
           <Input type="text" id="Address" value={addressDetail} name="addressDetail" onChange={onChangeText} />
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "addressDetail") || {}} />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "addressDetail") || {}} />
 
         <div className="cart_info_item">
           <label>Loại địa chỉ</label>
@@ -194,10 +174,7 @@ export default function CartInfo({ onChange, messageError }) {
             >Nhà riêng</Button>
           </div>
         </div>
-        <ErrorWrapper>
-          <ErrroSpace />
-          <ErrorText errors={_.get(messageError, "addressType") || {}} />
-        </ErrorWrapper>
+        <ErrorText errors={_.get(messageError, "addressType") || {}} />
 
       </div>
     </div>
