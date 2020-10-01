@@ -11,8 +11,10 @@ export default function CartScreen() {
     <Header />
     <Menu />
     <ShoppingCart />
+    
     <VideoIntro />
     <Map />
     <Footer />
+   
   </div>
 }

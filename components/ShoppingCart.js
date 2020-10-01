@@ -7,6 +7,7 @@ import utils from "../utils"
 import store from "../redux"
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router"
+import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 
 const CART_INIT = {
   coupon: null,
@@ -23,8 +24,39 @@ const CART_INIT = {
   }
 }
 
+function ModalExampleCloseIcon({ open, setOpen }) {
+  console.log("ModalExampleCloseIcon", open)
+  return (
+    <Modal
+      closeIcon
+      open={open}
+      // trigger={<Button>Show Modal</Button>}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+    >
+      {/* <Header icon='archive' content='Archive Old Messages' /> */}
+      <Modal.Content>
+        <p>
+          Đơn hàng của Quý khách đã được tạo thành công !
+          Vui lòng vào địa chỉ email đã khai báo để kiểm tra lại đơn hàng.”
+        </p>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color='green' onClick={() => setOpen(false)}>
+          <Icon name='checkmark' /> OK
+        </Button>
+      </Modal.Actions>
+    </Modal>
+  )
+}
+
+
 export default function ShoppingCart(props) {
   const [cart, setCart] = useState()
+  const [isPreview, setIsPreview] = useState(false)
+  const [open, setOpen] = useState(false)
+
+
   const [messageError, setMessageError] = useState({});
   const dispatch = useDispatch();
   const userInfoOrderFormData = useSelector(store.selectors.cart.getUserInfoOrderFormData);
@@ -61,6 +93,8 @@ export default function ShoppingCart(props) {
 
   const orderSuccess = () => {
     toast.success("Đặt hàng thành công")
+    setIsPreview(true);
+    setOpen(true);
     // setTimeout(() => {
     //   router.push("/")
     // }, 1000)
@@ -73,17 +107,20 @@ export default function ShoppingCart(props) {
   }
 
   const onSubmit = () => {
-    // if (!_.isEmpty(setMessageError)) {
-    onValidate()
-    dispatch(store.actions.cart.orderStart(null, { onSuccess: orderSuccess }))
-    // }
+    if (onValidate()) {
+      dispatch(store.actions.cart.orderStart(null, { onSuccess: orderSuccess }))
+    }
   }
 
 
 
   return <div className="shopping_cart_container">
-    <CartInfo onChange={onChangeFormInfo} messageError={messageError} />
-    <CartMoney onChange={onChangeCartMoney} onSubmit={onSubmit} onValidate={onValidate} messageError={messageError} />
+    <CartInfo onChange={onChangeFormInfo} messageError={messageError} isDisable={isPreview}/>
+    <CartMoney onChange={onChangeCartMoney} onSubmit={onSubmit} onValidate={onValidate} messageError={messageError}  isDisable={isPreview} />
+    <div style={{ flexDirection: "column" }}>
+      <ModalExampleCloseIcon open={open} setOpen={setOpen} />
+    </div>
   </div>
+
 
 }

@@ -191,11 +191,15 @@ a {
 }
 
 .product_book .minus:hover {
-  border-color: #7b6b6b;
+  border-color: #7b6b6b!important;
 }
 
 .product_book .minus-zero:hover {
   border-color: #ddd;
+}
+
+.product_book .minus-zero2:hover {
+  border-color: #c0c4cc!important;
 }
 
 .product_book .plus {
@@ -216,8 +220,9 @@ a {
 }
 
 .product_book .plus:hover {
-  border-color: #7b6b6b;
+  border-color: #7b6b6b!important;
 }
+
 
 .product_book .order {
   height: 38px;
@@ -1053,7 +1058,6 @@ a {
 .cart_info_container .cart_info_item label {
   display: flex;
   width: 200px;
-  font-weight: bold;
   font-size: 16px;
 }
 
@@ -1124,7 +1128,8 @@ textarea {
   flex-direction: row;
   font-weight: 500;
   color: rgb(96, 98, 102);
-  width: 200px
+  width: 200px;
+  font-size: 16px;
 }
 
 .paid-container .paid_info_value {
@@ -1139,4 +1144,11 @@ textarea {
 }
 
 .paid-container {
+}
+
+.ui .modal {
+  top: 50%!important;
+    left: 50%!important;
+    transform: translate(-50%,-50%)!important;
+    height: auto!important;
 }

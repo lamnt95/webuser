@@ -47,7 +47,7 @@ const FORM_INIT = {
   sex: "MALE",
 }
 
-export default function CartInfo({ onChange, messageError }) {
+export default function CartInfo({ onChange, messageError, isDisable }) {
   const [districtData, setDistricData] = useState(DICTRIC_IN_HANOI)
   const [formData, setFormData] = useState(FORM_INIT);
   const { receivedDate, addressDetail, addressType, email, fullName, phone, sex, provinceCode, districCode } = formData || {};
@@ -79,7 +79,7 @@ export default function CartInfo({ onChange, messageError }) {
       <div className="cart_info_item_row">
         <div className="cart_info_item">
           <label>Họ và tên</label>
-          <Input type="text" id="Name" value={fullName} name="fullName" onChange={onChangeText} />
+          <Input type="text" id="Name" value={fullName} name="fullName" onChange={onChangeText} disabled={isDisable} />
         </div>
         <ErrorText errors={_.get(messageError, "fullName") || {}} />
 
@@ -92,12 +92,14 @@ export default function CartInfo({ onChange, messageError }) {
               value='MALE'
               checked={sex === 'MALE'}
               onChange={() => onChangeSex("MALE")}
+              disabled={isDisable}
             />
             <Form.Radio
               label='Chị'
               value='FEMALE'
               checked={sex === 'FEMALE'}
               onChange={() => onChangeSex("FEMALE")}
+              disabled={isDisable}
             />
           </Form.Group>
         </div>
@@ -105,19 +107,21 @@ export default function CartInfo({ onChange, messageError }) {
 
         <div className="cart_info_item">
           <label>Email</label>
-          <Input type="email" id="Email" value={email} name="email" onChange={onChangeText} />
+          <Input type="email" id="Email" value={email} name="email" onChange={onChangeText}
+            disabled={isDisable}
+          />
         </div>
         <ErrorText errors={_.get(messageError, "email") || {}} />
 
         <div className="cart_info_item">
           <label>Điện thoại</label>
-          <Input type="text" id="Tel" value={phone} name="phone" onChange={onChangeText} />
+          <Input type="text" id="Tel" value={phone} name="phone" onChange={onChangeText} disabled={isDisable}/>
         </div>
         <ErrorText errors={_.get(messageError, "phone") || {}} />
 
         <div className="cart_info_item">
           <label>Ngày nhận</label>
-          <CartInfoCalendar date={receivedDate} onChange={onChangeReceiveDate} />
+          <CartInfoCalendar date={receivedDate} onChange={onChangeReceiveDate} isDisable={isDisable} />
         </div>
         <ErrorText errors={_.get(messageError, "receivedDate") || {}} />
 
@@ -128,6 +132,7 @@ export default function CartInfo({ onChange, messageError }) {
           <Dropdown
             placeholder='Chọn tỉnh thành phố'
             fluid
+            disabled={isDisable}
             selection
             style={{ fontSize: "16px" }}
             value={provinceCode}
@@ -145,6 +150,7 @@ export default function CartInfo({ onChange, messageError }) {
           <Dropdown
             placeholder='Chọn quận huyện'
             fluid
+            disabled={isDisable}
             style={{ fontSize: "16px" }}
             value={districCode}
             selection
@@ -159,7 +165,7 @@ export default function CartInfo({ onChange, messageError }) {
 
         <div className="cart_info_item">
           <label>Địa chỉ nhận</label>
-          <Input type="text" id="Address" value={addressDetail} name="addressDetail" onChange={onChangeText} />
+          <Input type="text" id="Address" value={addressDetail} name="addressDetail" onChange={onChangeText}disabled={isDisable} />
         </div>
         <ErrorText errors={_.get(messageError, "addressDetail") || {}} />
 
@@ -168,9 +174,11 @@ export default function CartInfo({ onChange, messageError }) {
           <div>
             <Button primary={addressType === "COMPANY"} onClick={() => onChangeAddressType("COMPANY")}
               style={{ fontSize: "16px" }}
+              disabled={isDisable}
             >Công ty</Button>
             <Button primary={addressType === "HOME"} onClick={() => onChangeAddressType("HOME")}
               style={{ fontSize: "16px" }}
+              disabled={isDisable}
             >Nhà riêng</Button>
           </div>
         </div>

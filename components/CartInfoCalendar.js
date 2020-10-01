@@ -4,7 +4,7 @@ import Calendar from 'react-calendar'
 import utils from "../utils"
 
 
-export default function CartInfoCalendar({ date, onChange }) {
+export default function CartInfoCalendar({ date, onChange, isDisable }) {
   const [isShowCalendar, setIsShowCalendar] = useState(false);
   const [calendar, setCalendar] = useState(date);
   const onClickInput = () => {
@@ -22,8 +22,8 @@ export default function CartInfoCalendar({ date, onChange }) {
 
   const calendarView = useMemo(() => utils.formatDate(calendar), [calendar])
 
-  return <div className="cart_info_item_calendar" style={{ flexDirection: "row", display: "flex" }}>
-    <Input type="text" id="DateFrom" value={calendarView} className="center" onClick={onClickInput} />
+  return <div className="cart_info_item_calendar" style={{ flexDirection: "row", display: "flex" }} >
+    <Input type="text" id="DateFrom" value={calendarView} className="center" onClick={onClickInput} disabled={isDisable} />
     {isShowCalendar && <Button style={{ marginLeft: "10px" }} onClick={onBlurInput}>X</Button>}
     {isShowCalendar && <div className="calendar">
       <Calendar

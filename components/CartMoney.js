@@ -61,10 +61,9 @@ const Remove = styled.div`
 `;
 
 
-function ProductRow({ item, index, onRemove }) {
+function ProductRow({ item, index, onRemove, isDisable }) {
   const { productQuantity, productId } = item || {}
   const dispatch = useDispatch();
-  console.log("product", item)
   const onDescreare = () => {
     const newProductQuantity = productQuantity - 1 < 1 ? 1 : productQuantity - 1
     dispatch(store.actions.cart.insertStart({ product: { productId, productQuantity: newProductQuantity } }, { onSuccess: () => { } }))
@@ -94,15 +93,21 @@ function ProductRow({ item, index, onRemove }) {
       <WrapperBtn>
         <div className="product_book" style={{ display: "flex" }}>
           <div className="left" style={{ alignItems: "center" }}>
-            <div className={`minus ${productQuantity == 1 ? "minus-zero" : ""}`} onClick={onDescreare} style={{
-              borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopLeftRadius:
-                "5px", borderBottomLeftRadius: "5px"
-            }}>-</div>
-            <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" style={{ borderColor: "#c0c4cc", width: "100px" }} />
-            <div className="plus" onClick={onIncreare} style={{
-              borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopRightRadius:
-                "5px", borderBottomRightRadius: "5px"
-            }}>+</div>
+            <button className={`minus ${productQuantity == 1 ? "minus-zero2" : ""}`}
+              disabled={isDisable}
+              onClick={onDescreare} style={{
+                borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopLeftRadius:
+                  "5px", borderBottomLeftRadius: "5px"
+              }}>-</button>
+            <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart"
+              disabled={isDisable}
+              style={{ borderColor: "#c0c4cc", width: "100px" }} />
+            <button className="plus" onClick={onIncreare}
+              disabled={isDisable}
+              style={{
+                borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopRightRadius:
+                  "5px", borderBottomRightRadius: "5px"
+              }}>+</button>
           </div>
         </div>
       </WrapperBtn>
@@ -117,7 +122,7 @@ function ProductRow({ item, index, onRemove }) {
   </Tr >
 }
 
-export default function promotionCoupon({ onChange, onSubmit, onValidate, messageError }) {
+export default function promotionCoupon({ onChange, onSubmit, onValidate, messageError, isDisable }) {
 
   const dispatch = useDispatch();
 
@@ -131,7 +136,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
 
   const [promotionCoupon, setPromotionCoupon] = useState();
   const [coupon, setCoupon] = useState(0);
-
+  console.log("productDetail", productDetail)
   const promotionCouponDropdown = _.map(promotionCoupon, i => ({
     key: i,
     text: i,
@@ -140,28 +145,45 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
 
   useEffect(() => {
     const productIdList = _.map(products, i => i.productId)
-    api.getProductsByMultiId(productIdList).then(res => utils.mapPriceProduct(res, products)).then(setProductDetail)
-    api.getPromotionCoupon().then(setPromotionCoupon);
-    setTimeout(() => { onCheck(true) }, 100)
+    api.getProductsByMultiId(productIdList)
+      .then(res => utils.mapPriceProduct(res, products))
+      .then(i => { console.log("productDetailApiGet", i); return i; })
+      .then(productDetail => {
+        setProductDetail(productDetail);
+        return productDetail;
+      })
+      .then((productDetail) => onCheck(true, productDetail))
+      .then(() => api.getPromotionCoupon())
+      .then(setPromotionCoupon)
   }, [])
 
   useEffect(() => {
     onCheck(true)
   }, [coupon, products])
 
-  const onCheck = (isOnlyProduct) => {
+  const onCheck = (isOnlyProduct, productDetailResponse) => {
+    const productDetailInstance = !_.isEmpty(productDetailResponse) ? productDetailResponse : productDetail;
     if (!isOnlyProduct && !onValidate()) return;
     const { productDetails, receivedDate, userInfoOrder, coupon } = cartInfo || {}
     const cartBody = isOnlyProduct ? { productDetails, receivedDate: utils.formatDate(new Date()), coupon } : { productDetails, receivedDate, userInfoOrder, coupon }
     api.validateOrder(cartBody).then(res => {
       const { productDetails, totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment } = res || {}
-      const productDetailKeyBy = _.keyBy(productDetail, "productId") || {}
+      const productDetailKeyBy = _.keyBy(productDetailInstance, "productId") || {}
       const productDetailsNew = _.map(productDetails, i => ({ ...(productDetailKeyBy[i.productId] || {}), ...i }))
       setProductDetail(productDetailsNew)
       const costDetailNew = { totalCost, totalCostAfterPromotion, totalRatePromotion, valueCoupon, valuePayment }
       setCostDetail(costDetailNew)
       setIsChecked(true)
-    }).catch(console.log)
+    }).catch(() => {
+      const productDetailKeyBy = _.keyBy(productDetailInstance, "productId") || {}
+      const productDetailsNew = _.map(products, i => ({ ...(productDetailKeyBy[i.productId] || {}), ...i }))
+      setProductDetail(productDetailsNew)
+      if (_.size(products) === 0) {
+        const { valueCoupon } = costDetail || {}
+        const costDetailNew = { totalCost: 0, totalCostAfterPromotion: 0, totalRatePromotion: 0, valueCoupon, valuePayment: 0 }
+        setCostDetail(costDetailNew)
+      }
+    })
   }
 
   const onChangeCoupon = (e, data) => {
@@ -193,10 +215,11 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
           {_.map(productDetail, (i, index) => <ProductRow
             item={i}
             index={index}
+            isDisable={isDisable}
             onRemove={onRemoveProduct}
           />)}
           <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
-            <th colSpan={1} >Tổng tạm tính</th>
+            <th colSpan={1} style={{ fontSize: "16px" }}>Tổng tạm tính</th>
             <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(totalCost) || 0}</td>
           </tr>
           {/* <tr>
@@ -208,7 +231,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
             <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{totalCostAfterPromotion}</td>
           </tr> */}
           {_.size(promotionCouponDropdown) > 0 && <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
-            <th colSpan={1} style={{ verticalAlign: "middle" }}>Nhập mã khuyến mại</th>
+            <th colSpan={1} style={{ verticalAlign: "middle" }} style={{ fontSize: "16px" }}>Nhập mã khuyến mại</th>
             <td colSpan={5} >
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
                 <Dropdown
@@ -217,6 +240,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
                   fluid
                   selection
                   value={coupon}
+                  disabled={isDisable}
                   options={promotionCouponDropdown}
                   onChange={onChangeCoupon}
                 />
@@ -225,11 +249,11 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
             </td>
           </tr>}
           <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
-            <th colSpan={1}>Giảm trừ</th>
+            <th colSpan={1} style={{ fontSize: "16px" }}>Giảm trừ</th>
             <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(valueCoupon) || 0}</td>
           </tr>
           <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
-            <th colSpan={1}>Tổng thanh toán</th>
+            <th colSpan={1} style={{ fontSize: "16px" }}>Tổng thanh toán</th>
             <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(valuePayment) || 0}</td>
           </tr>
         </tbody>

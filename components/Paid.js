@@ -29,6 +29,10 @@ export default function Paid() {
           <div className="paid_info_value">Ngân hàng ABCDXYS</div>
         </div>
         <div className="paid_info">
+          <div className="paid_info_key">Chi nhánh</div>
+          <div className="paid_info_value">Chi nhánh ABCDXYS</div>
+        </div>
+        <div className="paid_info">
           <div className="paid_info_key">Chủ tài khoản</div>
           <div className="paid_info_value">NGUYỄN VĂN A</div>
         </div>
