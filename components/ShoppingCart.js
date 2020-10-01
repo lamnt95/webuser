@@ -73,9 +73,10 @@ export default function ShoppingCart(props) {
   }
 
   const onSubmit = () => {
-    if (!_.isEmpty(setMessageError)) {
-      dispatch(store.actions.cart.orderStart(null, { onSuccess: orderSuccess }))
-    }
+    // if (!_.isEmpty(setMessageError)) {
+    onValidate()
+    dispatch(store.actions.cart.orderStart(null, { onSuccess: orderSuccess }))
+    // }
   }
 
 

@@ -234,18 +234,19 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
           </tr>
         </tbody>
       </table>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+      {/* <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
         {isChecked && <div className="cart_container_submit" style={{ height: '50px' }}>
           <div className="cart_container_submit_text" onClick={onSubmit}>Đặt hàng</div>
         </div>}
-      </div>
+      </div> */}
 
     </div>
   </div>
     <Paid />
     <div className="cart_container" style={{ paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px" }}>
       <div className="cart_container_submit" style={{ height: '50px' }}>
-        <div className="cart_container_submit_text" onClick={() => onCheck(false)}>Kiểm tra đơn hàng</div>
+        {/* <div className="cart_container_submit_text" onClick={() => onCheck(false)}>Kiểm tra đơn hàng</div> */}
+        <div className="cart_container_submit_text" onClick={onSubmit}>Đặt hàng</div>
       </div>
     </div>
   </>
