@@ -75,10 +75,11 @@ function ProductRow({ item, index, onRemove, isDisable }) {
   };
 
 
-  return <Tr key={item.productId} style={{
-    color: "rgb(96, 98, 102)!important;", fontSize: "16px", justifyContent: "center",
-    alignItems: "center",
-  }}>
+  return <Tr key={item.productId}
+    style={{
+      color: "rgb(96, 98, 102)!important;", fontSize: "16px", justifyContent: "center",
+      alignItems: "center",
+    }}>
     <Td >
       <InfoGroup>
         <Name>
@@ -93,21 +94,21 @@ function ProductRow({ item, index, onRemove, isDisable }) {
       <WrapperBtn>
         <div className="product_book" style={{ display: "flex" }}>
           <div className="left" style={{ alignItems: "center" }}>
-            <button className={`minus ${productQuantity == 1 ? "minus-zero2" : ""}`}
+            <div className={`minus ${productQuantity == 1 ? "minus-zero2" : ""} ${isDisable ? "disable" : ""}`}
               disabled={isDisable}
-              onClick={onDescreare} style={{
+              onClick={isDisable ? () => { } : onDescreare} style={{
                 borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopLeftRadius:
                   "5px", borderBottomLeftRadius: "5px"
-              }}>-</button>
+              }}>-</div>
             <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart"
               disabled={isDisable}
               style={{ borderColor: "#c0c4cc", width: "100px" }} />
-            <button className="plus" onClick={onIncreare}
+            <div className={`plus  ${isDisable ? "disable" : ""}`} onClick={isDisable ? () => { } : onIncreare}
               disabled={isDisable}
               style={{
                 borderColor: "#c0c4cc", backgroundColor: "rgb(245, 247, 250)", borderTopRightRadius:
                   "5px", borderBottomRightRadius: "5px"
-              }}>+</button>
+              }}>+</div>
           </div>
         </div>
       </WrapperBtn>
@@ -220,7 +221,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
           />)}
           <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
             <th colSpan={1} style={{ fontSize: "16px" }}>Tổng tạm tính</th>
-            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(totalCost) || 0}</td>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center", fontFamily: "Taviraj", fontSize: "16px" }}>{utils.formatMoney(totalCost) || 0}</td>
           </tr>
           {/* <tr>
             <th colSpan={5}>Tổng tiền được khuyến mại</th>
@@ -250,11 +251,11 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
           </tr>}
           <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
             <th colSpan={1} style={{ fontSize: "16px" }}>Giảm trừ</th>
-            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(valueCoupon) || 0}</td>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center", fontFamily: "Taviraj", fontSize: "16px" }}>{utils.formatMoney(valueCoupon) || 0}</td>
           </tr>
           <tr style={{ backgroundColor: "rgb(245, 247, 250)" }}>
             <th colSpan={1} style={{ fontSize: "16px" }}>Tổng thanh toán</th>
-            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center" }}>{utils.formatMoney(valuePayment) || 0}</td>
+            <td className="cart_container_originprice" colSpan={5} style={{ textAlign: "center", fontFamily: "Taviraj", fontSize: "16px" }}>{utils.formatMoney(valuePayment) || 0}</td>
           </tr>
         </tbody>
       </table>
@@ -267,11 +268,11 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
     </div>
   </div>
     <Paid />
-    <div className="cart_container" style={{ paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px" }}>
+    {!isDisable ? <div className="cart_container" style={{ paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px" }}>
       <div className="cart_container_submit" style={{ height: '50px' }}>
         {/* <div className="cart_container_submit_text" onClick={() => onCheck(false)}>Kiểm tra đơn hàng</div> */}
         <div className="cart_container_submit_text" onClick={onSubmit}>Đặt hàng</div>
       </div>
-    </div>
+    </div> : <div style={{ width: "100%", marginBottom: "30px" }} />}
   </>
 }

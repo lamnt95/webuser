@@ -223,6 +223,10 @@ a {
   border-color: #7b6b6b!important;
 }
 
+.product_book .disable:hover {
+  border-color: rgb(192, 196, 204)!important;
+}
+
 
 .product_book .order {
   height: 38px;
@@ -1109,6 +1113,13 @@ textarea {
   vertical-align: top;
   cursor: pointer;
   transition: all 0.3s linear;
+}
+
+.cart_container_submit_text:hover{
+  background-color: #7d0202;
+  text-decoration-color: #fff;
+  text-decoration: solid;
+  text-decoration-line: underline;
 }
 
 /*  tai khoan */

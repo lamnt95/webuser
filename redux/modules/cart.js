@@ -70,7 +70,7 @@ export const actions = {
 
 const getProducts = (state) => _.get(state, "cart.productDetails");
 const getCart = (state) => _.get(state, "cart");
-const getCountProduct = (state) => _.size(getProducts(state));
+const getCountProduct = (state) => _.sum(_.map(getProducts(state), "productQuantity"));
 const getUserInfoOrderFormData = state => {
   const { receivedDate, userInfoOrder } = getCart(state) || {};
   const { email, fullName, phone, sex, address } = userInfoOrder || {}
