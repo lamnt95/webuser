@@ -115,11 +115,11 @@ function ProductRow({ item, index, onRemove, isDisable }) {
     </Td>
 
     <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.totalCostAfterPromotion) || 0}</Td>
-    {!isDisable && <Td style={{ textAlign: "center" }}>
-      <Remove onClick={() => onRemove(item.productId)}>
+    <Td style={{ textAlign: "center" }}>
+      {!isDisable && <Remove onClick={() => onRemove(item.productId)}>
         Xoá
-      </Remove>
-    </Td>}
+      </Remove>}
+    </Td>
   </Tr >
 }
 
