@@ -115,11 +115,11 @@ function ProductRow({ item, index, onRemove, isDisable }) {
     </Td>
 
     <Td style={{ textAlign: "right" }}>{utils.formatMoney(item.totalCostAfterPromotion) || 0}</Td>
-    <Td style={{ textAlign: "center" }}>
+    {!isDisable && <Td style={{ textAlign: "center" }}>
       <Remove onClick={() => onRemove(item.productId)}>
         Xoá
       </Remove>
-    </Td>
+    </Td>}
   </Tr >
 }
 
@@ -245,7 +245,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
                   options={promotionCouponDropdown}
                   onChange={onChangeCoupon}
                 />
-                <div style={{ marginLeft: "20px", fontWeight: "700", cursor: "pointer" }} onClick={() => onChangeCoupon(null, { value: null })}>Xóa</div>
+                {!isDisable && <div style={{ marginLeft: "20px", fontWeight: "700", cursor: "pointer" }} onClick={() => onChangeCoupon(null, { value: null })}>Xóa</div>}
               </div>
             </td>
           </tr>}
