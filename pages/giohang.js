@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import CartScreen from "../screens/CartScreen"
+import withReduxHOC  from "../hoc/withRedux"
 
-export default function Cart() {
+function Cart() {
   return (
     <div>
       <Head>
@@ -12,3 +13,11 @@ export default function Cart() {
     </div>
   )
 }
+
+Cart.getInitialProps = async (ctx = {}) => {
+  const { pathname, store } = ctx;
+  const state = store.getState();
+  return { pathname, state };
+};
+
+export default withReduxHOC.withRedux(Cart)

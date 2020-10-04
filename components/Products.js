@@ -1,15 +1,13 @@
 import _ from "lodash"
 import React from "react"
 import Product from "./Product"
-import { useRouter } from "next/router"
 import utils from "../utils"
+import { Router } from "../routes"
 
 export default function Products({ data = [] }) {
-  const router = useRouter()
-
   const onClick = (name, id) => {
     const route = `/chi-tiet-san-pham/${utils.toSlug(name)}-${id}`
-    router.push(route)
+    Router.pushRoute(route)
   }
   const length = _.size(data)
   return <div className={`products ${length == 1 ? "products-one-item" : ""}`} id="products">

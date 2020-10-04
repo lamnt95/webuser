@@ -47,8 +47,8 @@ const ListProduct_Line = styled.div`
 
 export default function ProductDetail(props) {
   const { onPress, data } = props;
-  const [product, setProduct] = useState();
-  const { name, code, price, productQuantity, description, subImages, id, unit, summary, priceAfterPromotion } = product || {}
+  const [product, setProduct] = useState({ productQuantity: 1 });
+  const { name, code, price, description, subImages, id, unit, summary, priceAfterPromotion, productQuantity } = product || {}
   const dispatch = useDispatch();
 
   const isPriceDiffPriceAfterPromotion = price !== priceAfterPromotion;
@@ -57,7 +57,9 @@ export default function ProductDetail(props) {
   console.log("ProductDetail", product)
 
   useEffect(() => {
-    setProduct(data)
+    const { productQuantity } = data || {};
+    const productQuantityNew = productQuantity === 0 ? 1 : productQuantity;
+    setProduct({ ...data, productQuantity: productQuantityNew })
   }, [data])
 
   const onDescreare = () => {

@@ -3,4 +3,4 @@ import storeRedux from "../redux";
 
 const wrapperNextWithStore = createWrapper(storeRedux.createStore, { debug: true });
 
-export default wrapperNextWithStore.withRedux;
+export default wrapperNextWithStore;

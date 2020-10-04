@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { useRouter } from "next/router"
 import api from "../../api"
 import utils from "../../utils"
+import { Router } from "../../routes";
 
 const Container = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ const Tab = styled.div`
 `;
 
 export default function Menu() {
-  const router = useRouter() || {}
+  const router = useRouter();
   const [menu, setMenu] = useState();
   const pathname = "/san-pham/" + _.get(router, "query.id")
   useEffect(() => {
@@ -65,7 +66,9 @@ export default function Menu() {
   }, [])
 
   const onClick = (route, scrollTo) => {
-    router.push(`${route}${scrollTo || "#"}`)
+    const path = `${route}${scrollTo || "#"}`;
+    console.log("router menu", path)
+    Router.pushRoute(path)
   }
   return <Container>
     <Left>

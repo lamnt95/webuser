@@ -6,8 +6,8 @@ import CartMoney from "./CartMoney"
 import utils from "../utils"
 import store from "../redux"
 import { toast } from 'react-toastify';
-import { useRouter } from "next/router"
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Router } from "../routes"
 
 const CART_INIT = {
   coupon: null,
@@ -60,8 +60,6 @@ export default function ShoppingCart(props) {
   const [messageError, setMessageError] = useState({});
   const dispatch = useDispatch();
   const userInfoOrderFormData = useSelector(store.selectors.cart.getUserInfoOrderFormData);
-  const router = useRouter();
-
 
   const onChangeFormInfo = (formData) => {
     const { receivedDate, addressDetail, addressType, email, fullName, phone, sex, provinceCode, districCode } = formData || {};
@@ -95,9 +93,6 @@ export default function ShoppingCart(props) {
     toast.success("Đặt hàng thành công")
     setIsPreview(true);
     setOpen(true);
-    // setTimeout(() => {
-    //   router.push("/")
-    // }, 1000)
   }
 
   const onValidate = () => {

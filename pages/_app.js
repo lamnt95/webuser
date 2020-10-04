@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css'
 import Head from "next/head"
-import withRedux from "../hoc/withRedux"
+import withReduxHOC  from "../hoc/withRedux"
 import { ToastContainer } from "react-toastify";
 
 import styled from "styled-components"
@@ -51,5 +51,5 @@ function MyApp({ Component, pageProps }) {
   </Container>
 }
 
-export default withRedux(MyApp)
+export default withReduxHOC.withRedux(MyApp)
 

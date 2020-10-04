@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Dropdown, Input, TextArea, Form } from 'semantic-ui-react'
 
-export default function Paid() {
+export default function Paid({isDisable}) {
   const [paidStatus, setPaidStatus] = useState("TIENMAT")
   return <div className="cart_container paid-container">
     <h2 className="cart_container_title">Vui lòng chọn hình thức thanh toán</h2>
@@ -12,6 +12,7 @@ export default function Paid() {
           label='Thanh toán bằng tiền mặt khi nhận hàng'
           value='TIENMAT'
           checked={paidStatus === 'TIENMAT'}
+          disabled={isDisable}
           onChange={() => setPaidStatus("TIENMAT")}
         />
         <Form.Radio
@@ -19,6 +20,7 @@ export default function Paid() {
           label='Thanh toán trước bằng chuyển khoản'
           value='CHUYENKHOAN'
           checked={paidStatus === 'CHUYENKHOAN'}
+          disabled={isDisable}
           onChange={() => setPaidStatus("CHUYENKHOAN")}
         />
       </Form.Group>

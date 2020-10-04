@@ -1,6 +1,7 @@
 const express = require("express");
 const next = require("next");
 const getConfig = require('./next.config');
+const routes = require('./routes')
 
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
@@ -13,6 +14,8 @@ const app = next({
   dev,
   prod,
 });
+
+const routerHandler = routes.getRequestHandler(app)
 
 const handle = app.getRequestHandler();
 
@@ -30,6 +33,8 @@ app.prepare().then(() => {
   Object.keys(devProxy).forEach(function (context) {
     server.use(context, createProxyMiddleware(devProxy[context]))
   })
+
+  server.use(routerHandler);
 
   server.all("*", (req, res) => {
     return handle(req, res);

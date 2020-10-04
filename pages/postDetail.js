@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import PostScreen from "../screens/PostScreen"
+import PostDetailScreen from "../screens/PostDetailScreen"
 import withReduxHOC  from "../hoc/withRedux"
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PostScreen />
+      <PostDetailScreen />
     </div>
   )
 }

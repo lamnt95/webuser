@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import HomeScreen from "../screens/HomeScreen"
+import withReduxHOC  from "../hoc/withRedux"
 
-export default function Home() {
+function Home() {
   return (
     <div>
       <Head>
@@ -12,3 +13,11 @@ export default function Home() {
     </div>
   )
 }
+
+Home.getInitialProps = async (ctx = {}) => {
+  const { pathname, store } = ctx;
+  const state = store.getState();
+  return { pathname, state };
+};
+
+export default withReduxHOC.withRedux(Home)

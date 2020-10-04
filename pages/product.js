@@ -1,23 +1,24 @@
+import _ from "lodash"
 import Head from 'next/head'
-import PostScreen from "../screens/PostScreen"
-import withReduxHOC  from "../hoc/withRedux"
+import HomeScreen from "../screens/HomeScreen"
+import withReduxHOC from "../hoc/withRedux"
 
-function Home() {
+function ProductPage() {
   return (
     <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PostScreen />
+      <HomeScreen />
     </div>
   )
 }
 
-Home.getInitialProps = async (ctx = {}) => {
+ProductPage.getInitialProps = async (ctx = {}) => {
   const { pathname, store } = ctx;
   const state = store.getState();
   return { pathname, state };
 };
 
-export default withReduxHOC.withRedux(Home)
+export default withReduxHOC.withRedux(ProductPage)

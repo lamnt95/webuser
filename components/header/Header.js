@@ -1,9 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import store from "../../redux"
-
+import { Router } from "../../routes";
 // const logo1 = require("../../public/logo1.jpg")
 
 const Container = styled.div`
@@ -149,9 +148,8 @@ const PhoneNumber = styled.div`
 export default function Header({ onChange = () => { }, onSubmit = () => { } }) {
   const count = useSelector(store.selectors.cart.getCountProduct);
 
-  const router = useRouter()
   const goCart = () => {
-    router.push("/giohang")
+    Router.pushRoute("/giohang")
   }
   return <Container>
     <Left>

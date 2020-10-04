@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import PostScreen from "../screens/PostScreen"
+import ProductDetailScreen from "../screens/ProductDetailScreen"
 import withReduxHOC  from "../hoc/withRedux"
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PostScreen />
+      <ProductDetailScreen />
     </div>
   )
 }
@@ -20,4 +20,4 @@ Home.getInitialProps = async (ctx = {}) => {
   return { pathname, state };
 };
 
-export default withReduxHOC.withRedux(Home)
+export default withReduxHOC.withRedux(Home);
