@@ -54,7 +54,6 @@ export default function ProductDetail(props) {
   const isPriceDiffPriceAfterPromotion = price !== priceAfterPromotion;
   const isPromotion = isPriceDiffPriceAfterPromotion && _.isNumber(priceAfterPromotion)
 
-  console.log("ProductDetail", product)
 
   useEffect(() => {
     const { productQuantity } = data || {};
@@ -71,6 +70,12 @@ export default function ProductDetail(props) {
     const newProductQuantity = productQuantity + 1 < 1 ? 1 : productQuantity + 1
     setProduct({ ...product, productQuantity: newProductQuantity })
   }
+
+  const onChange = (e) => {
+    const quantity = _.parseInt(_.get(e, "target.value")) || 1;
+    const newProductQuantity = quantity < 1 ? 1 : quantity;
+    setProduct({ ...product, productQuantity: newProductQuantity })
+  };
 
   const onClickAddToCart = () => {
     if (productQuantity === 0 || _.isNull(productQuantity)) return;
@@ -104,7 +109,7 @@ export default function ProductDetail(props) {
         <div className="product_book" style={{ justifyContent: "flex-start", marginTop: 60 }}>
           <div className="left">
             <div className={`minus ${productQuantity == 1 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>
-            <input type="text" value={productQuantity || 1} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" />
+            <input type="text" value={productQuantity || 1} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" onChange={onChange}/>
             <div className="plus" onClick={onIncreare}>+</div>
           </div>
           <div className="right">

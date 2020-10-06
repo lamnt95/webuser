@@ -24,7 +24,6 @@ export default function ProductDetailScreen() {
     if (!_.isEmpty(productId)) {
       api.getProductById(productId).then(res => {
         const { categoryId } = res || {}
-        console.log("getProductById response", res)
         setProduct({ ...res, productQuantity: 0 })
         if (!_.isUndefined(categoryId)) {
           api.getCategory(categoryId).then(setCategory)
@@ -36,7 +35,6 @@ export default function ProductDetailScreen() {
     }
 
   }, [productId])
-  console.log("product", product)
   return <div>
     <Header />
     <Menu />

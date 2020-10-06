@@ -25,7 +25,6 @@ const CART_INIT = {
 }
 
 function ModalExampleCloseIcon({ open, setOpen }) {
-  console.log("ModalExampleCloseIcon", open)
   return (
     <Modal
       closeIcon
@@ -52,7 +51,7 @@ function ModalExampleCloseIcon({ open, setOpen }) {
 
 
 export default function ShoppingCart(props) {
-  const [cart, setCart] = useState({ payment: "ONLINE" })
+  const [cart, setCart] = useState({ payment: "CASH" })
   const [isPreview, setIsPreview] = useState(false)
   const [open, setOpen] = useState(false)
   const { payment } = cart || {}
@@ -95,7 +94,6 @@ export default function ShoppingCart(props) {
       ...cart,
       payment,
     }
-    console.log("onChangeCartMoneyPayment", cartNew)
     setCart(cartNew)
     dispatch(store.actions.cart.insertStart({ cart: cartNew }))
   }

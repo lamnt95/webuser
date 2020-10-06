@@ -144,7 +144,6 @@ export default function promotionCoupon({ payment, onChange, onSubmit, onValidat
 
   const [promotionCoupon, setPromotionCoupon] = useState();
   const [coupon, setCoupon] = useState(0);
-  console.log("productDetail", productDetail)
   const promotionCouponDropdown = _.map(promotionCoupon, i => ({
     key: i,
     text: i,
@@ -155,7 +154,6 @@ export default function promotionCoupon({ payment, onChange, onSubmit, onValidat
     const productIdList = _.map(products, i => i.productId)
     api.getProductsByMultiId(productIdList)
       .then(res => utils.mapPriceProduct(res, products))
-      .then(i => { console.log("productDetailApiGet", i); return i; })
       .then(productDetail => {
         setProductDetail(productDetail);
         return productDetail;

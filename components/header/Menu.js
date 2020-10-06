@@ -67,7 +67,6 @@ export default function Menu() {
 
   const onClick = (route, scrollTo) => {
     const path = `${route}${scrollTo || "#"}`;
-    console.log("router menu", path)
     Router.pushRoute(path)
   }
   return <Container>

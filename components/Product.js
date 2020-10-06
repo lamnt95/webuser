@@ -30,6 +30,12 @@ export default function Product(props) {
     setProduct({ ...product, productQuantity: newProductQuantity })
   }
 
+  const onChange = (e) => {
+    const quantity = _.parseInt(_.get(e, "target.value")) || 1;
+    const newProductQuantity = quantity < 1 ? 1 : quantity;
+    setProduct({ ...product, productQuantity: newProductQuantity })
+  };
+
   const onClickAddToCart = () => {
     if (productQuantity === 0) return;
 
@@ -52,7 +58,7 @@ export default function Product(props) {
     <div className="product_book">
       <div className="left">
         <div className={`minus ${productQuantity == 1 ? "minus-zero" : ""}`} onClick={onDescreare}>-</div>
-        <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" />
+        <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart" onChange={onChange}/>
         <div className="plus" onClick={onIncreare}>+</div>
       </div>
       <div className="right">
