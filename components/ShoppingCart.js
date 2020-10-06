@@ -52,10 +52,10 @@ function ModalExampleCloseIcon({ open, setOpen }) {
 
 
 export default function ShoppingCart(props) {
-  const [cart, setCart] = useState()
+  const [cart, setCart] = useState({ payment: "ONLINE" })
   const [isPreview, setIsPreview] = useState(false)
   const [open, setOpen] = useState(false)
-
+  const { payment } = cart || {}
 
   const [messageError, setMessageError] = useState({});
   const dispatch = useDispatch();
@@ -83,11 +83,24 @@ export default function ShoppingCart(props) {
     const { coupon } = formData || {};
     const cartNew = {
       ...cart,
-      coupon
+      coupon,
     }
     setCart(cartNew)
     dispatch(store.actions.cart.insertStart({ cart: cartNew }))
   }
+
+  const onChangeCartMoneyPayment = (formData) => {
+    const { payment } = formData || {};
+    const cartNew = {
+      ...cart,
+      payment,
+    }
+    console.log("onChangeCartMoneyPayment", cartNew)
+    setCart(cartNew)
+    dispatch(store.actions.cart.insertStart({ cart: cartNew }))
+  }
+
+
 
   const orderSuccess = () => {
     toast.success("Đặt hàng thành công")
@@ -110,8 +123,12 @@ export default function ShoppingCart(props) {
 
 
   return <div className="shopping_cart_container">
-    <CartInfo onChange={onChangeFormInfo} messageError={messageError} isDisable={isPreview}/>
-    <CartMoney onChange={onChangeCartMoney} onSubmit={onSubmit} onValidate={onValidate} messageError={messageError}  isDisable={isPreview} />
+    <CartInfo onChange={onChangeFormInfo} messageError={messageError} isDisable={isPreview} />
+    <CartMoney
+      payment={payment}
+      onChange={onChangeCartMoney}
+      onChangePaymentProp={onChangeCartMoneyPayment}
+      onSubmit={onSubmit} onValidate={onValidate} messageError={messageError} isDisable={isPreview} />
     <div style={{ flexDirection: "column" }}>
       <ModalExampleCloseIcon open={open} setOpen={setOpen} />
     </div>

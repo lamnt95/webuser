@@ -123,7 +123,7 @@ function ProductRow({ item, index, onRemove, isDisable }) {
   </Tr >
 }
 
-export default function promotionCoupon({ onChange, onSubmit, onValidate, messageError, isDisable }) {
+export default function promotionCoupon({ payment, onChange, onSubmit, onValidate, messageError, isDisable, onChangePaymentProp }) {
 
   const dispatch = useDispatch();
 
@@ -191,6 +191,11 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
     const { value } = data || {}
     onChange({ coupon: value })
     setCoupon(value)
+  }
+
+  const onChangePayment = (e, data) => {
+    const { value } = data || {}
+    onChangePaymentProp({ payment: value })
   }
 
   const onRemoveProduct = (productId) => {
@@ -267,7 +272,7 @@ export default function promotionCoupon({ onChange, onSubmit, onValidate, messag
 
     </div>
   </div>
-    <Paid isDisable={isDisable} />
+    <Paid isDisable={isDisable} onChangePayment={onChangePayment} payment={payment} />
     {!isDisable ? <div className="cart_container" style={{ paddingTop: "20px", paddingBottom: "20px", marginBottom: "30px" }}>
       <div className="cart_container_submit" style={{ height: '50px' }}>
         {/* <div className="cart_container_submit_text" onClick={() => onCheck(false)}>Kiểm tra đơn hàng</div> */}
