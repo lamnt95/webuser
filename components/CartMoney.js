@@ -74,6 +74,12 @@ function ProductRow({ item, index, onRemove, isDisable }) {
     dispatch(store.actions.cart.insertStart({ product: { productId, productQuantity: newProductQuantity } }, { onSuccess: () => { } }))
   };
 
+  const onChange = (e) => {
+    const quantity = _.parseInt(_.get(e, "target.value")) || 1;
+    const newProductQuantity = quantity < 1 ? 1 : quantity;
+    dispatch(store.actions.cart.insertStart({ product: { productId, productQuantity: newProductQuantity } }, { onSuccess: () => { } }))
+  };
+
 
   return <Tr key={item.productId}
     style={{
@@ -102,6 +108,7 @@ function ProductRow({ item, index, onRemove, isDisable }) {
               }}>-</div>
             <input type="text" value={productQuantity} data-id="00366373-aeab-4980-b416-e16af97df19a" className="incart"
               disabled={isDisable}
+              onChange={onChange}
               style={{ borderColor: "#c0c4cc", width: "100px" }} />
             <div className={`plus  ${isDisable ? "disable" : ""}`} onClick={isDisable ? () => { } : onIncreare}
               disabled={isDisable}
