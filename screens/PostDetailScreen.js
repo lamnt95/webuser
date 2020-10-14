@@ -10,7 +10,7 @@ import api from "../api"
 import utils from "../utils"
 import { useRouter } from "next/router"
 
-const products = new Array(10).fill(0)
+const products = new Array(10).fill(10)
 
 export const ContentWrapper = styled.div`
   margin-top: 35px;
