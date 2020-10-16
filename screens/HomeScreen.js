@@ -38,7 +38,7 @@ export default function HomeScreen() {
   useEffect(() => {
     api.getCategory(categoryId).then(res => res.data).then(setCategory);
     api.getPostIntroDetail().then(setPostIntro);
-    api.queryProduct({ categoryId }).then(res => _.get(res, "data.content")).then(setProducts);
+    api.queryProduct({ categoryId, size: 10000 }).then(res => _.get(res, "data.content")).then(setProducts);
   }, [categoryId])
 
   const onChangeSearch = (keyword) => {

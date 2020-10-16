@@ -3,7 +3,7 @@ import api from "./api"
 
 function queryPost(page = 0, size = 20) {
   const url = `/restaurant-cake-api/v1/user/useful-information?page=${page}&size=${size}`
-  return api.get(url).then(({ data }) => data.content)
+  return api.get(url);
 }
 
 function getPostDetail(postId) {

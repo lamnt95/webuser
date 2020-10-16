@@ -9,36 +9,48 @@ import { useRouter } from "next/router"
 import api from "../api"
 import utils from "../utils"
 import Paging from "../components/Paging"
+import { Router } from "../routes"
 
+function TopProductItem({ data = {} }) {
+ 
+  const { image, name, id } = data;
 
-function TopProductItem() {
+  const handleClick = () => {
+    const route = `/chi-tiet-san-pham/${utils.toSlug(name)}-${id}`
+    Router.pushRoute(route)
+  }
+
   return <div className="post-product-topContent-product">
-    <img src="https://live.staticflickr.com/65535/50358783101_daa936c77c_k.jpg" className="top-img" />
+    <img src={image} className="top-img" />
     <div className="text">
-      <div className="name">Bánh cốm nhân đậu xanh (loại nhỏ)</div>
-      {/* <div className="price">5000đ/cái</div> */}
+      <div className="name" onClick={handleClick}>{name}</div>
     </div>
   </div>
 }
 
-function TopPostItem() {
+function TopPostItem({ data = {} }) {
+  const { title, id } = data;
   return <div className="post-product-topContent-product">
     <img src="https://live.staticflickr.com/65535/50358783101_daa936c77c_k.jpg" className="top-img" />
     <div className="text">
-      <div className="name">Tin tức hữu ích</div>
+      <a className="name" href={`/chi-tiet-bai-viet/${id}`} target="_blank">{title}</a>
     </div>
   </div>
 }
 
 function PostItem({ data = {} }) {
-  const { id, title, viewQuantity, summary = "Trường tổng quan thông tin hữu ích", updatedDate } = data || {}
+  const {
+    id, title, viewQuantity, summary = "Trường tổng quan bài viết mặc định",
+    imageAvatarPost = "https://live.staticflickr.com/65535/50358783101_daa936c77c_k.jpg",
+    updatedDate
+  } = data || {}
   return <div className="post-preview-item-container" key={id}>
-    <img src="https://live.staticflickr.com/65535/50358783101_daa936c77c_k.jpg" className="post-img" />
+    <img src={imageAvatarPost} className="post-img" />
     <div className="post-preview-item" key={id}>
       <div className="header">
-        <div className="title">
+        <a className="title" href={`/chi-tiet-bai-viet/${id}`} target="_blank">
           {title}
-        </div>
+        </a>
         <div className="info">
           <i className="fas fa-clock icon-clock" />
           <div className="date">{utils.formatDate(updatedDate)}</div>
@@ -49,16 +61,11 @@ function PostItem({ data = {} }) {
       </div>
       <div className="content">
         <span className="text">
-          {summary}
+          {summary + " ... "}
         </span>
-        <span className="text-more">
+        <a className="text-more" href={`/chi-tiet-bai-viet/${id}`} target="_blank">
           Đọc thêm
-        </span>
-        {/* <div className="foot">
-          <a className="btn" href={`/chi-tiet-bai-viet/${id}`} target="blank">
-            XEM THÊM &gt;&gt;
-          </a>
-        </div> */}
+        </a>
       </div>
     </div>
   </div >
@@ -66,10 +73,27 @@ function PostItem({ data = {} }) {
 
 export default function PostScreen() {
   const [products, setProducts] = useState([])
+  const [allPosts, setAllPosts] = useState([])
+  const [post, setPost] = useState([])
+  const [page, setPage] = useState(0)
+  const [totalPage, setTotalPage] = useState()
+
 
   useEffect(() => {
-    api.queryPost().then(setProducts)
+    api.queryProduct({ size: 10000 }).then(res => {
+      setProducts(_.get(res, "data.content"));
+    });
+    api.queryPost(0, 10000).then(res => {
+      setAllPosts(_.get(res, "data.content"));
+    });
   }, [])
+
+  useEffect(() => {
+    api.queryPost(page, 10).then(res => {
+      setPost(_.get(res, "data.content"));
+      setTotalPage(_.get(res, "data.totalPages"))
+    });
+  }, [page])
 
   return <div>
     <Header />
@@ -78,13 +102,13 @@ export default function PostScreen() {
       <div className="post-left">
         <div className="post-product-top">
           <div className="post-product-topHeader">
-            <i className="fas fa-bars icon-bars" />
+            <i className="fas fa-bars icon-bars" style={{ fontSize: "20px" }} />
             <div className="post-product-topHeaderText">
-              SẢN PHẨM NỔI BẬT
+              Sản phẩm nổi bật
             </div>
           </div>
           <div className="post-product-topContent">
-            {_.map(products, i => <TopProductItem />)}
+            {_.map(products, item => <TopProductItem data={item} key={item.id} />)}
           </div>
         </div>
         <div className="post-product-top">
@@ -95,7 +119,7 @@ export default function PostScreen() {
             </div>
           </div>
           <div className="post-product-topContent">
-            {_.map(products, i => <TopPostItem />)}
+            {_.map(allPosts, item => <TopPostItem data={item} key={item.id} />)}
           </div>
         </div>
       </div>
@@ -106,10 +130,14 @@ export default function PostScreen() {
           </div>
         </div>
         <div className="post-preview-item-wrapper">
-          {_.map(products, i => <PostItem data={i} />)}
+          {_.map(post, i => <PostItem data={i} />)}
         </div>
-        <div style={{display:"flex", justifyContent:"center", paddingBottom:"30px", paddingTop:"15px"}}>
-          <Paging total={10}/>
+        <div style={{ display: "flex", justifyContent: "center", paddingBottom: "30px", paddingTop: "15px", backgroundColor: "#f3f0f5" }}>
+          <Paging total={totalPage} current={page}
+            onClickPaging={(index) => setPage(index)}
+            onBack={() => setPage(page - 1)}
+            onNext={() => setPage(page + 1)}
+          />
         </div>
       </div>
     </div>

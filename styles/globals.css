@@ -525,15 +525,15 @@ a {
   display: flex;
   width: 350px;
   flex-direction: column;
-  padding-right: 10px;
+  margin-right: 30px;
 }
 
 .post-right {
   display: flex;
   flex: 1;
   /* padding-left: 10px; */
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .post-product-top {
@@ -543,30 +543,31 @@ a {
   /* flex: 1; */
   -webkit-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.56); 
   box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.3);
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .post-product-topHeader {
   display: flex;
-  flex: 1;
+  /* flex: 1; */
   flex-direction: row;
   align-items: center;
   background-color: #bebf6e;
-  height: 70px;
-  max-height: 70px;
+  height: 50px;
+  max-height: 50px;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  font-family: Taviraj;
 }
 
 .post-product-topHeaderText {
-  font-family: Roboto;
+  font-family: Taviraj;
   color: #7e2024;
-  margin-left: 10px;
+  margin-left: 20px;
   font-size: 17px;
   font-weight: bold;
 }
@@ -577,7 +578,7 @@ a {
 }
 
 .post-product-topContent {
-  background-color: #fff;
+  background-color: #f3f0f5;
   border: 1px solid #bebf6e;
   padding-left: 15px;
   padding-right: 15px;
@@ -594,8 +595,8 @@ a {
 }
 
 .post-product-topContent-product .top-img {
-  width: 100px;
-  height: 60px;
+  width: 95px;
+  height: 70px;
   display: flex;
   border: 1px solid #dedede;
   cursor: pointer;
@@ -611,10 +612,10 @@ a {
 }
 
 .post-product-topContent-product .text .name {
-  font-family: Roboto Condensed;
+  font-family: Taviraj;
   font-weight: normal;
   font-size: 16px;
-  color: #7d6d6e;
+  color: #524a4b;
   cursor: pointer;
 }
 
@@ -657,6 +658,7 @@ a {
   display: flex;
   flex: 1;
   flex-direction: column;
+  background-color: #f3f0f5;
 }
 
 .post-preview-item {
@@ -678,15 +680,15 @@ a {
 }
 
 .post-preview-item .header .title {
-  font-family: Roboto;
+  font-family: Taviraj;
   font-weight: normal;
   font-size: 17px;
-  color: #bebf6e;
+  color: #847d44;
   cursor: pointer;
 }
 
 .post-preview-item .header .title:hover {
-  color: #999a59;
+  color: #5d5a45;
 }
 
 .post-preview-item .header .info {
@@ -714,6 +716,7 @@ a {
 .post-preview-item .header .info .date {
   margin-left: 10px;
   font-size: 17px;
+  font-family: Taviraj;
 }
 
 .post-preview-item .header .info .seperate {
@@ -724,6 +727,7 @@ a {
 .post-preview-item .header .info .view {
   margin-left: 10px;
   font-size: 17px;
+  font-family: Taviraj;
 }
 
 .post-preview-item .content {
@@ -750,22 +754,22 @@ a {
 
 .post-preview-item .content .text {
   margin-top: 20px;
-  font-family: Roboto;
+  font-family: Taviraj;
   font-size: 16px;
-  color: #7d6d6e;
+  color: #524a4b;
 }
 
 .post-preview-item .content .text-more {
   margin-top: 20px;
-  font-family: Roboto;
+  font-family: Taviraj;
   font-size: 16px;
-  color: #bebf6e;
+  color: #847d44;
   margin-left: 10px;
   cursor: pointer;
 }
 
 .post-preview-item .content .text-more:hover {
-  color: #999a59;
+  color: #5d5a45;
 }
 
 .post-preview-item .content .foot {
@@ -1230,6 +1234,6 @@ textarea {
 }
 
 .pagingItem:hover{
-  background-color: #bebf6e;
+  background-color: #bebf6e!important;
   color: #fff;
 }
