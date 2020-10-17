@@ -7,7 +7,9 @@ function queryPost(page = 0, size = 20) {
 }
 
 function getPostDetail(postId) {
-  return queryPost(0, 1000).then(res => _.head(_.filter(res, i => i.id == postId) || []) || {})
+  return queryPost(0, 10000).then(res => {
+    return _.head(_.filter(_.get(res, "data.content"), i => i.id == postId) || []) || {};
+  })
 }
 
 function increasePostView(postId) {
