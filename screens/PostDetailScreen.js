@@ -18,7 +18,7 @@ export const ContentWrapper = styled.div`
   padding-right: 50px;
   color: #2d2b2b;
   p {
-    font-size: 16px;
+    font-size: 14px;
     font-family: Taviraj;
     text-align: justify;
   }
