@@ -579,7 +579,7 @@ a {
 }
 
 .post-product-topContent {
-  background-color: #f3f0f5;
+  background-color: #f1f1f0;
   border: 1px solid #b2b2b2;
   border-top: 0px;
   padding-left: 15px;
@@ -656,14 +656,14 @@ a {
   /* box-shadow: 4px 4px 10px 3px rgb(136 114 114 / 23%); */
   box-shadow: 7px 7px 6px 0px rgb(136 114 114 / 10%);
   margin-bottom: 50px;
-  background-color: #f3f0f5;
+  background-color: #f1f1f0;
 }
 
 .post-preview-item-wrapper {
   display: flex;
   flex: 1;
   flex-direction: column;
-  background-color: #f3f0f5;
+  background-color: #f1f1f0;
   height: 1000px;
   max-height: 800px;
   overflow: scroll;
