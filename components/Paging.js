@@ -49,7 +49,7 @@ function Paging(props) {
                 }}
                 onClick={() => onClickPaging(item)}
               >
-                {item}
+                {item + 1}
               </div>
             ))}
             <div

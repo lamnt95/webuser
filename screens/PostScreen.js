@@ -12,7 +12,7 @@ import Paging from "../components/Paging"
 import { Router } from "../routes"
 
 function TopProductItem({ data = {} }) {
- 
+
   const { image, name, id } = data;
 
   const handleClick = () => {
@@ -20,22 +20,22 @@ function TopProductItem({ data = {} }) {
     Router.pushRoute(route)
   }
 
-  return <div className="post-product-topContent-product">
+  return <div className="post-product-topContent-product" onClick={handleClick}>
     <img src={image} className="top-img" />
     <div className="text">
-      <div className="name" onClick={handleClick}>{name}</div>
+      <div className="name">{name}</div>
     </div>
   </div>
 }
 
 function TopPostItem({ data = {} }) {
   const { title, id } = data;
-  return <div className="post-product-topContent-product">
+  return <a className="post-product-topContent-product" href={`/chi-tiet-bai-viet/${id}`} target="_blank">
     <img src="https://live.staticflickr.com/65535/50358783101_daa936c77c_k.jpg" className="top-img" />
     <div className="text">
-      <a className="name" href={`/chi-tiet-bai-viet/${id}`} target="_blank">{title}</a>
+      <div className="name">{title}</div>
     </div>
-  </div>
+  </a>
 }
 
 function PostItem({ data = {} }) {
